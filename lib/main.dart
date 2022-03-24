@@ -1,5 +1,5 @@
 import 'package:brota_ai_app/screens/login.dart';
-import 'package:brota_ai_app/screens/splash.dart';
+import 'package:brota_ai_app/screens/my_splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: Login(),
+      home: const Scaffold(
+        body: MySplashScreen(),
       ),
     );
   }
