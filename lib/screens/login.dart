@@ -14,14 +14,19 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: const Color(0xFF28D484),
         body: Padding(
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
               Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: Image.asset("assets/images/logo.png")),
+                  padding: const EdgeInsets.fromLTRB(10, 100, 10, 0),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: 120,
+                    height: 120,
+                  )),
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -32,7 +37,7 @@ class _LoginState extends State<Login> {
                       fontFamily: 'EastSeaDokdo',
                       fontWeight: FontWeight.w500,
                       fontSize: 100,
-                      color: Color(0xFF198754)),
+                      color: Colors.black),
                 ),
               ),
               Container(
@@ -86,7 +91,7 @@ class _LoginState extends State<Login> {
                       'Cadastre-se',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFF198754),
+                        color: Colors.black,
                       ),
                     ),
                     onPressed: () {
