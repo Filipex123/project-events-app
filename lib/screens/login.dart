@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
                       fontFamily: 'EastSeaDokdo',
                       fontWeight: FontWeight.w500,
                       fontSize: 100,
-                      color: Colors.black),
+                      color: Colors.white),
                 ),
               ),
               Container(
@@ -91,7 +91,7 @@ class _LoginState extends State<Login> {
                       'Cadastre-se',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     onPressed: () {
