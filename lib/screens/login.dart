@@ -45,7 +45,8 @@ class _LoginState extends State<Login> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.fromLTRB(11, 42, 11, 42),
+              padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
+              margin: const EdgeInsets.only(left: 11.0, right: 11.0),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -74,7 +75,7 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF198754), // Background color
+                        primary: Color(0xFFD6822C), // Background color
                       ),
                       child: const Text('Entrar'),
                       onPressed: () {
@@ -90,14 +91,17 @@ class _LoginState extends State<Login> {
                 color: Colors.white.withOpacity(0.4),
               ),
             ),
+            Spacer(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text('Não tem conta?'),
                 TextButton(
                   child: const Text(
                     'Cadastre-se',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Color(0xFFD6822C),
                     ),
                   ),
                   onPressed: () {
@@ -105,7 +109,6 @@ class _LoginState extends State<Login> {
                   },
                 )
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
         ),
