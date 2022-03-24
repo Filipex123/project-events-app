@@ -17,8 +17,12 @@ class _LoginState extends State<Login> {
         child: ListView(
           children: <Widget>[
             Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: Image.asset("assets/images/logo.png")),
+            Container(
               alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: const Text(
                 'Brota ai',
                 style: TextStyle(
@@ -50,18 +54,18 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: const Text(
-                'Esqueci minha senha',
-                style: TextStyle(color: Color(0xFF198754)),
-              ),
-            ),
+            // TextButton(
+            //   onPressed: () {
+            //     //forgot password screen
+            //   },
+            //   child: const Text(
+            //     'Esqueci minha senha',
+            //     style: TextStyle(color: Color(0xFF198754)),
+            //   ),
+            // ),
             Container(
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                height: 60,
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xFF198754), // Background color
