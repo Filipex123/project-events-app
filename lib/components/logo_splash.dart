@@ -7,19 +7,18 @@ class LogoSplash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Image.asset(
             "assets/images/logo.png",
-            height: 180.0,
+            height: 50.0,
           ),
           const Text(
             'Brota ai',
             style: TextStyle(
                 fontStyle: FontStyle.normal,
                 fontFamily: 'EastSeaDokdo',
-                fontSize: 90,
+                fontSize: 20,
                 color: Color(0xFF198754)),
           ),
         ],
