@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_new
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,15 +41,15 @@ class _LoginState extends State<Login> {
                 'Brota ai',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
-                    fontFamily: 'EastSeaDokdo',
+                    fontFamily: 'ABeeZee',
                     fontWeight: FontWeight.w500,
                     fontSize: 70,
                     color: Colors.white),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
-              padding: const EdgeInsets.fromLTRB(22, 20, 22, 20),
+              padding: const EdgeInsets.fromLTRB(22, 34, 22, 34),
               margin: const EdgeInsets.only(left: 11.0, right: 11.0),
               child: Column(
                 children: <Widget>[
@@ -62,6 +64,8 @@ class _LoginState extends State<Login> {
                         labelText: 'Email',
                         labelStyle: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'ABeeZee',
+                          color: Colors.black.withOpacity(0.3),
                         ),
                         filled: true,
                         fillColor: Colors.white,
@@ -80,6 +84,8 @@ class _LoginState extends State<Login> {
                         labelText: 'Senha',
                         labelStyle: TextStyle(
                           fontSize: 20,
+                          fontFamily: 'ABeeZee',
+                          color: Colors.black.withOpacity(0.3),
                         ),
                         filled: true,
                         fillColor: Colors.white,
@@ -96,22 +102,23 @@ class _LoginState extends State<Login> {
                             color: Colors.black.withOpacity(0.25),
                             spreadRadius: 1,
                             blurRadius: 4,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           )
                         ],
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFFD6822C),
+                          primary: const Color(0xFFD6822C),
                           minimumSize: const Size.fromHeight(50),
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(8.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         child: const Text(
                           'Entrar',
                           style: TextStyle(
                             fontSize: 20,
+                            fontFamily: 'ABeeZee',
                           ),
                         ),
                         onPressed: () {
@@ -136,6 +143,7 @@ class _LoginState extends State<Login> {
                   'Não tem conta?',
                   style: TextStyle(
                     fontSize: 20,
+                    fontFamily: 'ABeeZee',
                   ),
                 ),
                 TextButton(
@@ -145,6 +153,7 @@ class _LoginState extends State<Login> {
                         color: Color(0xFFD6822C),
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
+                        fontFamily: 'ABeeZee',
                         shadows: <Shadow>[
                           Shadow(
                             offset: Offset(0, 4),

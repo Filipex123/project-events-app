@@ -54,6 +54,9 @@ flutter:
     - family: EastSeaDokdo
       fonts:
         - asset: assets/fonts/EastSeaDokdo-Regular.ttf
+    - family: ABeeZee
+      fonts:
+        - asset: assets/fonts/ABeeZee-Regular.ttf
   assets:
     - assets/images/
 
