@@ -38,12 +38,12 @@ class _LoginState extends State<Login> {
               alignment: Alignment.center,
               padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
               child: const Text(
-                'Brota ai',
+                'Brota aí',
                 style: TextStyle(
                     fontStyle: FontStyle.normal,
                     fontFamily: 'ABeeZee',
                     fontWeight: FontWeight.w500,
-                    fontSize: 70,
+                    fontSize: 50,
                     color: Colors.white),
               ),
             ),
