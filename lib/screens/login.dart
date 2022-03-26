@@ -1,4 +1,5 @@
 import 'package:brota_ai_app/components/background.dart';
+import 'package:brota_ai_app/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -160,7 +161,11 @@ class _LoginState extends State<Login> {
                           ]),
                     ),
                     onPressed: () {
-                      //signup screen
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SignupScreen())); //signup screen
                     },
                   )
                 ],
