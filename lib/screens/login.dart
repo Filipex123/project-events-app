@@ -1,7 +1,9 @@
 import 'package:brota_ai_app/components/background.dart';
+import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:brota_ai_app/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -52,22 +54,11 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.all(10),
-                        child: TextField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            labelText: 'Email',
-                            labelStyle: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'ABeeZee',
-                              color: Colors.black.withOpacity(0.3),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
+                        child: const TextInputField(
+                            icon: FontAwesomeIcons.envelope,
+                            hint: 'Email',
+                            inputType: TextInputType.emailAddress,
+                            inputAction: TextInputAction.next),
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
