@@ -40,9 +40,9 @@ class _MySplashScreenState extends State<MySplashScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontStyle: FontStyle.normal,
-                fontFamily: 'EastSeaDokdo',
+                fontFamily: 'ABeeZee',
                 fontWeight: FontWeight.w500,
-                fontSize: 100,
+                fontSize: 60,
                 color: Colors.white),
           ),
         ],
