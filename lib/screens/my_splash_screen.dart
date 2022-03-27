@@ -1,9 +1,16 @@
+import 'dart:developer';
+
+import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
+import 'package:brota_ai_app/services/api_service.dart';
+import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 class MySplashScreen extends StatefulWidget {
+  static const String id = 'splash_screen';
+
   const MySplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,11 +20,23 @@ class MySplashScreen extends StatefulWidget {
 class _MySplashScreenState extends State<MySplashScreen> {
   @override
   void initState() {
+    _verifyLoggedUser();
     super.initState();
-    Timer(
-        const Duration(seconds: 3),
-        () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Login())));
+  }
+
+  Future _verifyLoggedUser() async {
+    APIService apiService = APIService();
+    String? token = await TokenStorageService.read();
+
+    if(token == null) {
+      Navigator.pushReplacementNamed(context, LoginScreen.id);
+    } else {
+      apiService.validToken(token).then(( response ) {
+        Navigator.pushReplacementNamed(context, HomeScreen.id);
+      }).catchError(( error ) {
+        Navigator.pushReplacementNamed(context, LoginScreen.id);
+      });
+    }
   }
 
   @override
