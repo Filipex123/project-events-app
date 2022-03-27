@@ -8,6 +8,8 @@ class TextInputField extends StatelessWidget {
     required this.hint,
     this.inputType,
     this.inputAction,
+    this.maxLength,
+    this.isPassword,
     this.handleOnChange,
     this.controller
   }) : super(key: key);
@@ -16,6 +18,8 @@ class TextInputField extends StatelessWidget {
   final String hint;
   final TextInputType? inputType;
   final TextInputAction? inputAction;
+  final int? maxLength;
+  final bool? isPassword;
   final Function(String)? handleOnChange;
   final TextEditingController? controller;
 
@@ -50,7 +54,10 @@ class TextInputField extends StatelessWidget {
               hintStyle: kInputText,
               filled: true,
               fillColor: Colors.white,
+              counterText: ''
             ),
+            maxLength: maxLength,
+            obscureText: isPassword ?? false,
             style: kInputText,
             keyboardType: inputType,
             textInputAction: inputAction,
