@@ -6,10 +6,12 @@ import 'dart:convert';
 class APIService {
   final String baseUrl = "http://192.168.0.14:3333/api";
 
-  Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
-    Uri requestUrl = Uri.parse("$baseUrl/login");
+  Uri getRequestUrl(String path) {
+    return Uri.parse("$baseUrl/$path");
+  }
 
-    final response = await http.post(requestUrl, body: loginRequestModel.toJson());
+  Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
+    final response = await http.post(getRequestUrl('login'), body: loginRequestModel.toJson());
 
     LoginResponseModel responseMaped = LoginResponseModel.fromJson(json.decode(response.body));
 
@@ -21,9 +23,7 @@ class APIService {
   }
 
   Future<SignUpResponseModel> signUp(SignUpRequestModel signUpRequestModel) async {
-    Uri requestUrl = Uri.parse("$baseUrl/users");
-
-    final response = await http.post(requestUrl, body: signUpRequestModel.toJson());
+    final response = await http.post(getRequestUrl('users'), body: signUpRequestModel.toJson());
 
      SignUpResponseModel responseMaped = SignUpResponseModel.fromJson(json.decode(response.body));
 
