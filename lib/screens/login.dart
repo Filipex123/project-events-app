@@ -1,11 +1,13 @@
 import 'package:brota_ai_app/components/background.dart';
+import 'package:brota_ai_app/components/logo.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:brota_ai_app/screens/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
@@ -16,6 +18,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: const Color(0xFF198754),
@@ -23,67 +27,50 @@ class _LoginState extends State<Login> {
           child: Column(
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.only(top: 160.0),
-                padding: const EdgeInsets.all(10.0),
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/images/logo-pin.png",
-                  width: 80,
-                  height: 120,
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                child: const Logo(),
+              ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
+                  child: const Text(
+                    'Brota aí',
+                    style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontFamily: 'ABeeZee',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 50,
+                        color: Colors.white),
+                  ),
                 ),
               ),
               Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
-                child: const Text(
-                  'Brota aí',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontFamily: 'ABeeZee',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 50,
-                      color: Colors.white),
-                ),
-              ),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.fromLTRB(22, 34, 22, 34),
-                margin: const EdgeInsets.only(left: 11.0, right: 11.0),
+                height: size.height * 0.4,
+                padding: const EdgeInsets.fromLTRB(22, 28, 22, 34),
+                margin: const EdgeInsets.only(left: 13.0, right: 13.0),
                 child: SingleChildScrollView(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const TextInputField(
-                            icon: FontAwesomeIcons.envelope,
-                            hint: 'Email',
-                            inputType: TextInputType.emailAddress,
-                            inputAction: TextInputAction.next),
+                      const TextInputField(
+                        icon: Icons.email,
+                        hint: 'Email',
+                        inputType: TextInputType.emailAddress,
+                        inputAction: TextInputAction.next,
                       ),
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: TextField(
-                          obscureText: true,
-                          controller: passwordController,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            labelText: 'Senha',
-                            labelStyle: TextStyle(
-                              fontSize: 20,
-                              fontFamily: 'ABeeZee',
-                              color: Colors.black.withOpacity(0.3),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                          ),
-                        ),
+                      const TextInputField(
+                        icon: Icons.password,
+                        hint: 'Senha',
+                        inputType: TextInputType.text,
+                        inputAction: TextInputAction.next,
                       ),
                       Container(
                         padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                        height: 73,
+                        height: size.height * 0.1,
                         child: Container(
+                          height: size.height * 0.1,
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(

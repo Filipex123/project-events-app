@@ -1,4 +1,3 @@
-import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/my_splash_screen.dart';
 import 'package:flutter/material.dart';
 

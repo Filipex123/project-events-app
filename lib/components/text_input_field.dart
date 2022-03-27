@@ -23,10 +23,6 @@ class TextInputField extends StatelessWidget {
       child: Container(
         height: size.height * 0.08,
         width: size.width * 0.8,
-        // decoration: BoxDecoration(
-        //   color: Colors.grey[500]!.withOpacity(0.5),
-        //   borderRadius: BorderRadius.circular(8),
-        // ),
         child: Center(
           child: TextField(
             decoration: InputDecoration(
@@ -38,7 +34,7 @@ class TextInputField extends StatelessWidget {
                 child: Icon(
                   icon,
                   size: 28,
-                  color: Colors.black,
+                  color: Colors.black.withOpacity(0.3),
                 ),
               ),
               hintText: hint,
