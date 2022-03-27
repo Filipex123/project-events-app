@@ -51,7 +51,7 @@ class TextInputField extends StatelessWidget {
                 ),
               ),
               hintText: hint,
-              hintStyle: kInputText,
+              hintStyle: kHintInputText,
               filled: true,
               fillColor: Colors.white,
               counterText: ''
