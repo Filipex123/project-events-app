@@ -111,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         icon: Icons.email,
                         hint: 'Email',
+                        maxLength: 255,
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                       ),
@@ -118,25 +119,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passwordController,
                         icon: Icons.password,
                         hint: 'Senha',
+                        maxLength: 30,
+                        isPassword: true,
                         inputType: TextInputType.text,
-                        inputAction: TextInputAction.next,
+                        inputAction: TextInputAction.done,
                       ),
                       Container(
-                        
                         padding: const EdgeInsets.only(top: 4),
                         height: size.height * 0.075,
                         child: Container(
                           height: size.height * 0.075,
-                          // decoration: BoxDecoration(
-                          //   boxShadow: [
-                          //     BoxShadow(
-                          //       color: Colors.black.withOpacity(0.25),
-                          //       spreadRadius: 1,
-                          //       blurRadius: 4,
-                          //       offset: const Offset(0, 4),
-                          //     )
-                          //   ],
-                          // ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: const Color(0xFFD6822C),
