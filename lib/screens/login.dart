@@ -1,20 +1,73 @@
+import 'dart:developer';
+
+import 'package:brota_ai_app/screens/home.dart';
+import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/logo.dart';
+import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
+import 'package:brota_ai_app/models/login_model.dart';
 import 'package:brota_ai_app/screens/signup.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  static const String id = 'login_screen';
+
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginState();
+  State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  LoginRequestModel requestModel = LoginRequestModel(email: '', password: '');
+
+  @override
+  void initState() {
+    super.initState();
+
+    emailController.addListener(handleOnChangeEmail);
+    passwordController.addListener(handleOnChangePassword);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void handleOnChangeEmail() {
+    requestModel.email = emailController.text;
+  }
+
+  void handleOnChangePassword() {
+    requestModel.password = passwordController.text;
+  }
+
+  void handleOnClickLoginButton() async {
+    log(requestModel.toJson().toString());
+    APIService apiService = APIService();
+
+    apiService.login(requestModel).then(( response ) {
+      TokenStorageService.store(response.token);
+      Navigator.pushReplacementNamed(context, HomeScreen.id);
+    }).catchError(( error ) {
+      showModalBottomSheet<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleModal(text: error.error ?? '');
+        }
+      );
+    });
+  }
+
+  void handleOnPressSignUp(BuildContext context) {
+    Navigator.pushNamed(context, SignUpScreen.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,40 +100,43 @@ class _LoginState extends State<Login> {
                 ),
               ),
               Container(
-                height: size.height * 0.4,
-                padding: const EdgeInsets.fromLTRB(22, 28, 22, 34),
-                margin: const EdgeInsets.only(left: 13.0, right: 13.0),
+                height: size.height * 0.3,
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                margin: const EdgeInsets.only(left: 16, right: 16),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const TextInputField(
+                      TextInputField(
+                        controller: emailController,
                         icon: Icons.email,
                         hint: 'Email',
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                       ),
-                      const TextInputField(
+                      TextInputField(
+                        controller: passwordController,
                         icon: Icons.password,
                         hint: 'Senha',
                         inputType: TextInputType.text,
                         inputAction: TextInputAction.next,
                       ),
                       Container(
-                        padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                        height: size.height * 0.1,
+                        
+                        padding: const EdgeInsets.only(top: 4),
+                        height: size.height * 0.075,
                         child: Container(
-                          height: size.height * 0.1,
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.25),
-                                spreadRadius: 1,
-                                blurRadius: 4,
-                                offset: const Offset(0, 4),
-                              )
-                            ],
-                          ),
+                          height: size.height * 0.075,
+                          // decoration: BoxDecoration(
+                          //   boxShadow: [
+                          //     BoxShadow(
+                          //       color: Colors.black.withOpacity(0.25),
+                          //       spreadRadius: 1,
+                          //       blurRadius: 4,
+                          //       offset: const Offset(0, 4),
+                          //     )
+                          //   ],
+                          // ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: const Color(0xFFD6822C),
@@ -96,10 +152,7 @@ class _LoginState extends State<Login> {
                                 fontFamily: 'ABeeZee',
                               ),
                             ),
-                            onPressed: () {
-                              print(emailController.text);
-                              print(passwordController.text);
-                            },
+                            onPressed: handleOnClickLoginButton,
                           ),
                         ),
                       ),
@@ -139,11 +192,7 @@ class _LoginState extends State<Login> {
                           ]),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SignupScreen())); //signup screen
+                      handleOnPressSignUp(context);
                     },
                   )
                 ],

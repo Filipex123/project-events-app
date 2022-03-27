@@ -8,25 +8,34 @@ class TextInputField extends StatelessWidget {
     required this.hint,
     this.inputType,
     this.inputAction,
+    this.handleOnChange,
+    this.controller
   }) : super(key: key);
 
   final IconData icon;
   final String hint;
   final TextInputType? inputType;
   final TextInputAction? inputAction;
+  final Function(String)? handleOnChange;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Container(
         height: size.height * 0.08,
-        width: size.width * 0.8,
+        width: size.width - 32,
         child: Center(
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              focusedBorder:OutlineInputBorder(
+                borderSide: const BorderSide(color: Color(0xFFD6822C), width: 2.0),
                 borderRadius: BorderRadius.circular(8.0),
               ),
               prefixIcon: Padding(
