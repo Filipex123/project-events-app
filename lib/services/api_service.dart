@@ -4,14 +4,22 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  final String baseUrl = "http://192.168.0.14:3333/api";
+  static const String baseUrl = "http://192.168.0.14:3333/api";
+  static final Map<String, String> requestHeaders = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+  };
 
-  Uri getRequestUrl(String path) {
+  static Uri getRequestUrl(String path) {
     return Uri.parse("$baseUrl/$path");
   }
 
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
-    final response = await http.post(getRequestUrl('login'), body: loginRequestModel.toJson());
+    final response = await http.post(
+      getRequestUrl('login'),
+      body: json.encode(loginRequestModel.toJson()),
+      headers: requestHeaders
+    );
 
     LoginResponseModel responseMaped = LoginResponseModel.fromJson(json.decode(response.body));
 
@@ -23,7 +31,11 @@ class APIService {
   }
 
   Future<SignUpResponseModel> signUp(SignUpRequestModel signUpRequestModel) async {
-    final response = await http.post(getRequestUrl('users'), body: signUpRequestModel.toJson());
+    final response = await http.post(
+      getRequestUrl('users'),
+      body: json.encode(signUpRequestModel.toJson()),
+      headers: requestHeaders
+    );
 
      SignUpResponseModel responseMaped = SignUpResponseModel.fromJson(json.decode(response.body));
 
@@ -35,13 +47,12 @@ class APIService {
   }
 
   Future<void> validToken(String token) async {
-    Uri requestUrl = Uri.parse("$baseUrl/validToken");
-
-    Map<String, dynamic> requestBody = {'token': token};
-
-    final response = await http.get(requestUrl, headers: {
-      'Authorization': 'Bearer $token',
-    });
+    final response = await http.get(
+      getRequestUrl('validToken'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      }
+    );
 
     if(response.statusCode == 200){
       return;
