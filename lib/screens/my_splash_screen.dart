@@ -29,7 +29,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
     String? token = await TokenStorageService.read();
 
     if(token == null) {
-      Navigator.pushReplacementNamed(context, LoginScreen.id);
+      Timer(
+        const Duration(seconds: 3),
+        () => Navigator.pushReplacementNamed(context, LoginScreen.id)
+      );
     } else {
       apiService.validToken(token).then(( response ) {
         Navigator.pushReplacementNamed(context, HomeScreen.id);
