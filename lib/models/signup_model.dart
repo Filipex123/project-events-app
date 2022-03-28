@@ -1,3 +1,5 @@
+import 'package:brota_ai_app/models/request_model.dart';
+
 class SignUpResponseModel {
   final String token;
   final String error;
@@ -9,18 +11,35 @@ class SignUpResponseModel {
   }
 }
 
-class SignUpRequestModel {
-  String name;
-  String cpf;
-  String email;
-  String password;
-  String confirmPassword;
-  int age;
+class SignUpRequestModel implements RequestModel {
+  String? name;
+  String? cpf;
+  String? email;
+  String? password;
+  String? confirmPassword;
+  int? age;
+  String? sex;
 
-  SignUpRequestModel({required this.email, required this.password, required this.confirmPassword, required this.name, required this.cpf, required this.age});
+  SignUpRequestModel({
+    this.email,
+    this.password,
+    this.confirmPassword,
+    this.name,
+    this.cpf,
+    this.age,
+    this.sex
+  });
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> map = {'name': name, 'cpf': cpf,'email': email, 'password': password, 'age': age};
+    Map<String, dynamic> map = {
+      'name': name,
+      'cpf': cpf,
+      'email': email,
+      'password': password,
+      'age': age,
+      'sex': sex
+    };
+
     return map;
   }
 }

@@ -1,3 +1,5 @@
+import 'package:brota_ai_app/models/request_model.dart';
+
 class LoginResponseModel {
   final String token;
   final String error;
@@ -9,7 +11,7 @@ class LoginResponseModel {
   }
 }
 
-class LoginRequestModel {
+class LoginRequestModel implements RequestModel {
   String email;
   String password;
 
