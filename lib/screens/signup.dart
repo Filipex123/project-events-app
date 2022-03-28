@@ -30,11 +30,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   SignUpRequestModel requestModel = SignUpRequestModel();
 
   List<DropdownMenuItem<String>> sexItems = [
-    const DropdownMenuItem(child: Text("Masculino"),value: "M"),
-    const DropdownMenuItem(child: Text("Feminino"),value: "F"),
-    const DropdownMenuItem(child: Text("Prefiro não dizer"),value: "P"),
+    const DropdownMenuItem(child: Text("Masculino"), value: "M"),
+    const DropdownMenuItem(child: Text("Feminino"), value: "F"),
+    const DropdownMenuItem(child: Text("Prefiro não dizer"), value: "P"),
   ];
-    
+
   @override
   void initState() {
     super.initState();
@@ -75,13 +75,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleOnChangeAge() {
-    if(ageController.text != ''){
+    if (ageController.text != '') {
       requestModel.age = int.parse(ageController.text);
     }
   }
 
   void handleOnChangeSex(String? selectedValue) {
-    if(selectedValue != null) {
+    if (selectedValue != null) {
       requestModel.sex = selectedValue;
     }
   }
@@ -112,22 +112,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: Background(
           child: Column(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                child: const Logo(),
-              ),
+              const Spacer(),
+              const Logo(),
               Expanded(
-                flex: 4,
                 child: Container(
                   alignment: Alignment.topCenter,
-                  padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
-                  child: const Text(
+                  padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
+                  child: Text(
                     'Brota aí',
                     style: TextStyle(
                         fontStyle: FontStyle.normal,
                         fontFamily: 'ABeeZee',
                         fontWeight: FontWeight.w500,
-                        fontSize: 50,
+                        fontSize: size.height * 0.065,
                         color: Colors.white),
                   ),
                 ),
@@ -164,7 +161,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                       ),
-                      
                       TextInputField(
                         controller: passwordController,
                         icon: Icons.password,
@@ -192,35 +188,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         inputAction: TextInputAction.next,
                       ),
                       DropdownButtonFormField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedBorder:OutlineInputBorder(
-                            borderSide: const BorderSide(color: Color(0xFFD6822C), width: 2.0),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Icon(
-                              FontAwesomeIcons.genderless,
-                              size: 28,
-                              color: Colors.black.withOpacity(0.3),
-                            ),
-                          ),
-                          hintText: 'Sexo',
-                          hintStyle: kHintInputText,
-                          filled: true,
-                          fillColor: Colors.white,
-                          counterText: ''
-                        ),
-                        style: kInputText,
-                        //value: 'USA',
-                        onChanged: handleOnChangeSex,
-                        items: sexItems
-                      ),
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color(0xFFD6822C), width: 2.0),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Icon(
+                                  FontAwesomeIcons.genderless,
+                                  size: 28,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
+                              ),
+                              hintText: 'Sexo',
+                              hintStyle: kHintInputText,
+                              filled: true,
+                              fillColor: Colors.white,
+                              counterText: ''),
+                          style: kInputText,
+                          //value: 'USA',
+                          onChanged: handleOnChangeSex,
+                          items: sexItems),
                       Container(
-                        
                         padding: const EdgeInsets.only(top: 4),
                         height: size.height * 0.075,
                         child: Container(
@@ -257,7 +252,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Text(
-                    'Não tem conta?',
+                    'Já tem conta?',
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'ABeeZee',
@@ -265,7 +260,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   TextButton(
                     child: const Text(
-                      'Cadastre-se',
+                      'Entre',
                       style: TextStyle(
                           color: Color(0xFFD6822C),
                           fontWeight: FontWeight.bold,
