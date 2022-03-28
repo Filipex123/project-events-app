@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:brota_ai_app/components/error_modal.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
@@ -56,11 +57,14 @@ class _LoginScreenState extends State<LoginScreen> {
       TokenStorageService.store(response.token);
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
-      showModalBottomSheet<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return SimpleModal(text: error.error ?? '');
-          });
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => 
+          ErrorModal(
+            message: (error as LoginResponseModel).message,
+            closeButtonText: 'TENTAR NOVAMENTE',
+          )
+      );
     });
   }
 
