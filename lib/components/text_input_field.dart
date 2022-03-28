@@ -2,17 +2,17 @@ import 'package:brota_ai_app/components/paleta.dart';
 import 'package:flutter/material.dart';
 
 class TextInputField extends StatelessWidget {
-  const TextInputField({
-    Key? key,
-    required this.icon,
-    required this.hint,
-    this.inputType,
-    this.inputAction,
-    this.maxLength,
-    this.isPassword,
-    this.handleOnChange,
-    this.controller
-  }) : super(key: key);
+  const TextInputField(
+      {Key? key,
+      required this.icon,
+      required this.hint,
+      this.inputType,
+      this.inputAction,
+      this.maxLength,
+      this.isPassword,
+      this.handleOnChange,
+      this.controller})
+      : super(key: key);
 
   final IconData icon;
   final String hint;
@@ -35,27 +35,29 @@ class TextInputField extends StatelessWidget {
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              focusedBorder:OutlineInputBorder(
-                borderSide: const BorderSide(color: Color(0xFFD6822C), width: 2.0),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Icon(
-                  icon,
-                  size: 28,
-                  color: Colors.black.withOpacity(0.3),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
-              ),
-              hintText: hint,
-              hintStyle: kHintInputText,
-              filled: true,
-              fillColor: Colors.white,
-              counterText: ''
-            ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Color(0xFFD6822C),
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Icon(
+                    icon,
+                    size: 28,
+                    color: Colors.black.withOpacity(0.3),
+                  ),
+                ),
+                hintText: hint,
+                hintStyle: kHintInputText,
+                filled: true,
+                fillColor: Colors.white,
+                counterText: ''),
             maxLength: maxLength,
             obscureText: isPassword ?? false,
             style: kInputText,

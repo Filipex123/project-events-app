@@ -52,16 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
     log(requestModel.toJson().toString());
     APIService apiService = APIService();
 
-    apiService.login(requestModel).then(( response ) {
+    apiService.login(requestModel).then((response) {
       TokenStorageService.store(response.token);
       Navigator.pushReplacementNamed(context, HomeScreen.id);
-    }).catchError(( error ) {
+    }).catchError((error) {
       showModalBottomSheet<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleModal(text: error.error ?? '');
-        }
-      );
+          context: context,
+          builder: (BuildContext context) {
+            return SimpleModal(text: error.error ?? '');
+          });
     });
   }
 
@@ -79,15 +78,11 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Background(
           child: Column(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                child: const Logo(),
-              ),
+              const Spacer(),
+              const Logo(),
               Expanded(
-                flex: 4,
                 child: Container(
                   alignment: Alignment.topCenter,
-                  padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
                   child: const Text(
                     'Brota aí',
                     style: TextStyle(

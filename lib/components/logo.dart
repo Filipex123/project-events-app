@@ -9,10 +9,9 @@ class Logo extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Expanded(
-      flex: 2,
       child: Container(
         height: size.height * 0.15,
-        margin: const EdgeInsets.only(top: 10.0),
+        margin: const EdgeInsets.only(top: 0),
         alignment: Alignment.center,
         child: Image.asset(
           "assets/images/logo-pin.png",
