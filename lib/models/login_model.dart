@@ -2,12 +2,12 @@ import 'package:brota_ai_app/models/request_model.dart';
 
 class LoginResponseModel {
   final String token;
-  final String error;
+  final String message;
 
-  LoginResponseModel({required this.token, required this.error});
+  LoginResponseModel({required this.token, required this.message});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(token: json["token"] ?? "", error: json["message"] ?? "");
+    return LoginResponseModel(token: json["token"] ?? "", message: json["message"] ?? "");
   }
 }
 
