@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
@@ -7,6 +8,7 @@ import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/logo.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen';
@@ -25,8 +27,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
 
-  SignUpRequestModel requestModel = SignUpRequestModel(name: '', cpf: '', email: '', password: '', confirmPassword: '', age: 0);
+  SignUpRequestModel requestModel = SignUpRequestModel();
 
+  List<DropdownMenuItem<String>> sexItems = [
+    const DropdownMenuItem(child: Text("Masculino"),value: "M"),
+    const DropdownMenuItem(child: Text("Feminino"),value: "F"),
+    const DropdownMenuItem(child: Text("Prefiro não dizer"),value: "P"),
+  ];
+    
   @override
   void initState() {
     super.initState();
@@ -66,9 +74,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     requestModel.confirmPassword = confirmPasswordController.text;
   }
 
-   void handleOnChangeAge() {
+  void handleOnChangeAge() {
     if(ageController.text != ''){
       requestModel.age = int.parse(ageController.text);
+    }
+  }
+
+  void handleOnChangeSex(String? selectedValue) {
+    if(selectedValue != null) {
+      requestModel.sex = selectedValue;
     }
   }
 
@@ -77,10 +91,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     APIService apiService = APIService();
 
     apiService.signUp(requestModel).then((response) {
-      log('certo');
+      log('usuário criado');
     }).catchError((error) {
       log(error.error);
-      log('failed');
+      log('erro ao criar uduário');
     });
   }
 
@@ -119,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Container(
-                height: size.height * 1,
+                height: size.height * 0.5,
                 padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                 margin: const EdgeInsets.only(left: 16, right: 16),
                 child: SingleChildScrollView(
@@ -130,20 +144,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: nameController,
                         icon: Icons.person,
                         hint: 'Name',
-                        inputType: TextInputType.emailAddress,
+                        maxLength: 255,
+                        inputType: TextInputType.text,
                         inputAction: TextInputAction.next,
                       ),
                       TextInputField(
                         controller: cpfController,
                         icon: Icons.card_travel,
                         hint: 'CPF',
-                        inputType: TextInputType.emailAddress,
+                        maxLength: 11,
+                        inputType: TextInputType.number,
                         inputAction: TextInputAction.next,
                       ),
                       TextInputField(
                         controller: emailController,
                         icon: Icons.email,
                         hint: 'Email',
+                        maxLength: 255,
                         inputType: TextInputType.emailAddress,
                         inputAction: TextInputAction.next,
                       ),
@@ -152,6 +169,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: passwordController,
                         icon: Icons.password,
                         hint: 'Senha',
+                        maxLength: 30,
+                        isPassword: true,
                         inputType: TextInputType.text,
                         inputAction: TextInputAction.next,
                       ),
@@ -159,6 +178,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: confirmPasswordController,
                         icon: Icons.password,
                         hint: 'Confirme sua Senha',
+                        maxLength: 30,
+                        isPassword: true,
                         inputType: TextInputType.text,
                         inputAction: TextInputAction.next,
                       ),
@@ -166,8 +187,37 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: ageController,
                         icon: Icons.password,
                         hint: 'Idade',
+                        maxLength: 3,
                         inputType: TextInputType.number,
                         inputAction: TextInputAction.next,
+                      ),
+                      DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          focusedBorder:OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xFFD6822C), width: 2.0),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            child: Icon(
+                              FontAwesomeIcons.genderless,
+                              size: 28,
+                              color: Colors.black.withOpacity(0.3),
+                            ),
+                          ),
+                          hintText: 'Sexo',
+                          hintStyle: kHintInputText,
+                          filled: true,
+                          fillColor: Colors.white,
+                          counterText: ''
+                        ),
+                        style: kInputText,
+                        //value: 'USA',
+                        onChanged: handleOnChangeSex,
+                        items: sexItems
                       ),
                       Container(
                         
@@ -175,16 +225,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: size.height * 0.075,
                         child: Container(
                           height: size.height * 0.075,
-                          // decoration: BoxDecoration(
-                          //   boxShadow: [
-                          //     BoxShadow(
-                          //       color: Colors.black.withOpacity(0.25),
-                          //       spreadRadius: 1,
-                          //       blurRadius: 4,
-                          //       offset: const Offset(0, 4),
-                          //     )
-                          //   ],
-                          // ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               primary: const Color(0xFFD6822C),
@@ -194,7 +234,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Entrar',
+                              'Cadastrar-se',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontFamily: 'ABeeZee',
