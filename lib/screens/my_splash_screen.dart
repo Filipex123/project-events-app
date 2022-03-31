@@ -24,6 +24,10 @@ class _MySplashScreenState extends State<MySplashScreen> {
     super.initState();
   }
 
+  void _redirectToLogin() {
+    Navigator.pushReplacementNamed(context, LoginScreen.id);
+  }
+
   Future _verifyLoggedUser() async {
     APIService apiService = APIService();
     String? token = await TokenStorageService.read();
@@ -31,13 +35,14 @@ class _MySplashScreenState extends State<MySplashScreen> {
     if(token == null) {
       Timer(
         const Duration(seconds: 3),
-        () => Navigator.pushReplacementNamed(context, LoginScreen.id)
+        _redirectToLogin
       );
     } else {
       apiService.validToken(token).then(( response ) {
         Navigator.pushReplacementNamed(context, HomeScreen.id);
-      }).catchError(( error ) {
-        Navigator.pushReplacementNamed(context, LoginScreen.id);
+      }).catchError(( error ) async {
+        TokenStorageService.clear();
+        _redirectToLogin();
       });
     }
   }
