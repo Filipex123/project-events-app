@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:brota_ai_app/components/error_modal.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
@@ -58,17 +57,19 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
       showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (BuildContext context) => 
-          ErrorModal(
+          SimpleModal(
             message: (error as LoginResponseModel).message,
+            modalTitle: "Erro",
             closeButtonText: 'TENTAR NOVAMENTE',
           )
       );
     });
   }
 
-  void handleOnPressSignUp(BuildContext context) {
+  void handleOnPressSignUp() {
     Navigator.pushNamed(context, SignUpScreen.id);
   }
 
@@ -182,9 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ]),
                     ),
-                    onPressed: () {
-                      handleOnPressSignUp(context);
-                    },
+                    onPressed: handleOnPressSignUp,
                   )
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:brota_ai_app/components/paleta.dart';
+import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
@@ -91,15 +92,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
     APIService apiService = APIService();
 
     apiService.signUp(requestModel).then((response) {
-      log('usuário criado');
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => 
+          SimpleModal(
+            message: 'Usuário criado com sucesso.',
+            modalTitle: "Sucesso",
+            closeButtonText: 'OK',
+            closeCallBack: () {
+              Navigator.pop(context);
+            },
+          )
+      );
     }).catchError((error) {
-      log(error.error);
-      log('erro ao criar uduário');
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => 
+          const SimpleModal(
+            message: 'Erro ao se cadastrar.',
+            modalTitle: "Erro",
+            closeButtonText: 'TENTAR NOVAMENTE',
+          )
+      );
     });
   }
 
-  void handleOnPressLogin(BuildContext context) {
-    Navigator.pushNamed(context, LoginScreen.id);
+  void handleOnPressLogin() {
+    Navigator.pop(context);
   }
 
   @override
@@ -274,9 +295,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ]),
                     ),
-                    onPressed: () {
-                      handleOnPressLogin(context);
-                    },
+                    onPressed: handleOnPressLogin,
                   )
                 ],
               ),
