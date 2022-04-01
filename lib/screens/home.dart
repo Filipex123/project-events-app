@@ -1,27 +1,20 @@
 import 'dart:developer';
 
-import 'package:brota_ai_app/services/token_storage_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:brota_ai_app/components/drawer.dart';
+import 'package:brota_ai_app/components/google-map.dart';
+import 'package:brota_ai_app/components/snapping-sheet/snapping-sheet-widget.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String id = 'home_screen';
 
-  void _logout() {
-    TokenStorageService.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'ta logado'
-        ),
-        ElevatedButton(onPressed: _logout, child: Text(
-          'deslogar'
-        ))
-      ],
+    return Scaffold(
+      body: SimpleSnappingSheet(
+        widgetBackground: GoogleSimpleMap(),
+      ),
+      drawer: const DrawerMenu(),
     );
   }
 }

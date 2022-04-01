@@ -1,4 +1,3 @@
-import 'package:brota_ai_app/components/google-map.dart';
 import 'package:brota_ai_app/components/snapping-sheet/grabbing-widget.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
@@ -6,9 +5,11 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 class SimpleSnappingSheet extends StatelessWidget {
   SimpleSnappingSheet({
     Key? key,
+    Widget? this.widgetBackground
   }) : super(key: key);
 
   final ScrollController listViewController = ScrollController();
+  final Widget? widgetBackground;
 
   static const positions =  [
     SnappingPosition.factor(
@@ -33,7 +34,7 @@ class SimpleSnappingSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SnappingSheet(
-      child: GoogleSimpleMap(),
+      child: widgetBackground,
       lockOverflowDrag: true,
       snappingPositions: positions,
       initialSnappingPosition: positions[1],

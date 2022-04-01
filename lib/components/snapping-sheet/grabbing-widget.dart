@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class GrabbingWidget extends StatelessWidget {
   const GrabbingWidget({
     Key? key,
