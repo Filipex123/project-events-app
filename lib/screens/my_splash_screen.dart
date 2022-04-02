@@ -32,15 +32,12 @@ class _MySplashScreenState extends State<MySplashScreen> {
     APIService apiService = APIService();
     String? token = await TokenStorageService.read();
 
-    if(token == null) {
-      Timer(
-        const Duration(seconds: 3),
-        _redirectToLogin
-      );
+    if (token == null) {
+      Timer(const Duration(seconds: 3), _redirectToLogin);
     } else {
-      apiService.validToken(token).then(( response ) {
+      apiService.validToken(token).then((response) {
         Navigator.pushReplacementNamed(context, HomeScreen.id);
-      }).catchError(( error ) async {
+      }).catchError((error) async {
         TokenStorageService.clear();
         _redirectToLogin();
       });
@@ -49,30 +46,32 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF198754),
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Center(
-            child: Image.asset(
-              "assets/images/logo-pin.png",
-              width: 120,
-              height: 120,
+    return Scaffold(
+      body: Container(
+        color: const Color(0xFF198754),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Image.asset(
+                "assets/images/logo-pin.png",
+                width: 120,
+                height: 120,
+              ),
             ),
-          ),
-          const Text(
-            'Brota ai',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontStyle: FontStyle.normal,
-                fontFamily: 'ABeeZee',
-                fontWeight: FontWeight.w500,
-                fontSize: 60,
-                color: Colors.white),
-          ),
-        ],
+            const Text(
+              'Brota ai',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'ABeeZee',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 60,
+                  color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
