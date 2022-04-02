@@ -1,9 +1,7 @@
-import 'dart:developer';
-
+import 'package:brota_ai_app/components/date_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
-import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/logo.dart';
@@ -26,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController cpfController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
 
   SignUpRequestModel requestModel = SignUpRequestModel();
 
@@ -45,13 +43,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController.addListener(handleOnChangeEmail);
     passwordController.addListener(handleOnChangePassword);
     confirmPasswordController.addListener(handleOnChangeConfirmPassword);
-    ageController.addListener(handleOnChangeAge);
   }
 
   @override
   void dispose() {
+    nameController.dispose();
+    cpfController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
+    birthDateController.dispose();
     super.dispose();
   }
 
@@ -75,9 +76,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     requestModel.confirmPassword = confirmPasswordController.text;
   }
 
-  void handleOnChangeAge() {
-    if (ageController.text != '') {
-      requestModel.age = int.parse(ageController.text);
+  void handleOnChangeBirthDate(DateTime? selectedDate) {
+    if(selectedDate != null) {
+      requestModel.birthDate = selectedDate;
     }
   }
 
@@ -88,7 +89,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleOnClickSignUpButton() {
-    log(requestModel.toJson().toString());
     APIService apiService = APIService();
 
     apiService.signUp(requestModel).then((response) {
@@ -127,8 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: const Color(0xFF198754),
         body: Background(
           child: Column(
@@ -160,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: <Widget>[
                       TextInputField(
                         controller: nameController,
-                        icon: Icons.person,
+                        icon: FontAwesomeIcons.user,
                         hint: 'Name',
                         maxLength: 255,
                         inputType: TextInputType.text,
@@ -168,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextInputField(
                         controller: cpfController,
-                        icon: Icons.card_travel,
+                        icon: FontAwesomeIcons.idCard,
                         hint: 'CPF',
                         maxLength: 11,
                         inputType: TextInputType.number,
@@ -176,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextInputField(
                         controller: emailController,
-                        icon: Icons.email,
+                        icon: FontAwesomeIcons.envelope,
                         hint: 'Email',
                         maxLength: 255,
                         inputType: TextInputType.emailAddress,
@@ -184,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextInputField(
                         controller: passwordController,
-                        icon: Icons.password,
+                        icon: FontAwesomeIcons.key,
                         hint: 'Senha',
                         maxLength: 30,
                         isPassword: true,
@@ -193,20 +192,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextInputField(
                         controller: confirmPasswordController,
-                        icon: Icons.password,
+                        icon: FontAwesomeIcons.key,
                         hint: 'Confirme sua Senha',
                         maxLength: 30,
                         isPassword: true,
                         inputType: TextInputType.text,
                         inputAction: TextInputAction.next,
                       ),
-                      TextInputField(
-                        controller: ageController,
-                        icon: Icons.password,
-                        hint: 'Idade',
-                        maxLength: 3,
-                        inputType: TextInputType.number,
-                        inputAction: TextInputAction.next,
+                      DateInputField(
+                        controller: birthDateController,
+                        icon: FontAwesomeIcons.calendar,
+                        hint: 'Data de Nascimento',
+                        handleOnChange: handleOnChangeBirthDate,
                       ),
                       DropdownButtonFormField(
                           decoration: InputDecoration(
@@ -302,7 +299,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 }
