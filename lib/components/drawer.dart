@@ -1,5 +1,6 @@
 import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/screens/login.dart';
+import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
 
@@ -15,36 +16,36 @@ class DrawerMenu extends StatelessWidget {
 
   void _handleOnClickLogout(BuildContext context) {
     showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) => 
-        ConfirmModal(
-          modalTitle: "Sair",
-          message: "Deseja realmente sair da aplicação?",
-          cancelButtonText: 'CANCELAR',
-          confirmButtonText: 'SAIR',
-          confirmCallback: () { _logout(context); },
-        )
-    );
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => ConfirmModal(
+              modalTitle: "Sair",
+              message: "Deseja realmente sair da aplicação?",
+              cancelButtonText: 'CANCELAR',
+              confirmButtonText: 'SAIR',
+              confirmCallback: () {
+                _logout(context);
+              },
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        
-        child: ListView(
+      child: ListView(
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Color(0xFF198754),
             ),
             child: Text('Drawer Header'),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            //colocar um Icon
+            title: const Text('Criar evento'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, NewEventScreen.id);
             },
           ),
           ListTile(

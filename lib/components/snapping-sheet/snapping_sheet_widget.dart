@@ -1,19 +1,17 @@
-import 'package:brota_ai_app/components/snapping-sheet/grabbing-widget.dart';
+import 'package:brota_ai_app/components/snapping-sheet/grabbing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 
 class SimpleSnappingSheet extends StatelessWidget {
-  SimpleSnappingSheet({
-    Key? key,
-    required Widget this.widgetBackground,
-    SnappingSheetController? this.controller
-  }) : super(key: key);
+  SimpleSnappingSheet(
+      {Key? key, required Widget this.widgetBackground, this.controller})
+      : super(key: key);
 
   final ScrollController listViewController = ScrollController();
   final Widget widgetBackground;
   final SnappingSheetController? controller;
 
-  static const positions =  [
+  static const positions = [
     SnappingPosition.factor(
       positionFactor: 0.0,
       snappingCurve: Curves.easeOutExpo,
@@ -51,7 +49,7 @@ class SimpleSnappingSheet extends StatelessWidget {
             onPressed: () {
               Scaffold.of(context).openDrawer();
             },
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.white,
             child: const Icon(Icons.menu),
           ),
         ),
@@ -69,7 +67,7 @@ class SimpleSnappingSheet extends StatelessWidget {
                 color: Colors.green[200],
                 height: 100,
                 child: Center(
-                  child: Text("Evento "+ index.toString()),
+                  child: Text("Evento " + index.toString()),
                 ),
               );
             },

@@ -10,7 +10,7 @@ class GrabbingWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
         boxShadow: [
           BoxShadow(blurRadius: 25, color: Colors.black.withOpacity(0.2)),
         ],
@@ -19,7 +19,7 @@ class GrabbingWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             width: 100,
             height: 7,
             decoration: BoxDecoration(
@@ -30,7 +30,7 @@ class GrabbingWidget extends StatelessWidget {
           Container(
             color: Colors.grey[200],
             height: 2,
-            margin: EdgeInsets.all(15).copyWith(top: 0, bottom: 0),
+            margin: const EdgeInsets.all(15).copyWith(top: 0, bottom: 0),
           )
         ],
       ),
