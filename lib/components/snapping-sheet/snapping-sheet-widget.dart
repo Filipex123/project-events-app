@@ -5,11 +5,13 @@ import 'package:snapping_sheet/snapping_sheet.dart';
 class SimpleSnappingSheet extends StatelessWidget {
   SimpleSnappingSheet({
     Key? key,
-    Widget? this.widgetBackground
+    required Widget this.widgetBackground,
+    SnappingSheetController? this.controller
   }) : super(key: key);
 
   final ScrollController listViewController = ScrollController();
-  final Widget? widgetBackground;
+  final Widget widgetBackground;
+  final SnappingSheetController? controller;
 
   static const positions =  [
     SnappingPosition.factor(
@@ -27,13 +29,14 @@ class SimpleSnappingSheet extends StatelessWidget {
       grabbingContentOffset: GrabbingContentOffset.bottom,
       snappingCurve: Curves.elasticOut,
       snappingDuration: Duration(milliseconds: 1500),
-      positionFactor: 0.8,
+      positionFactor: 0.75,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return SnappingSheet(
+      controller: controller,
       child: widgetBackground,
       lockOverflowDrag: true,
       snappingPositions: positions,
