@@ -25,7 +25,7 @@ class DateInputField extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Container(
+      child: SizedBox(
         height: size.height * 0.08,
         width: size.width - (hadWidth ?? 32),
         child: Center(

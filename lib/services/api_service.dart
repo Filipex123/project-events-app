@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/models/login_model.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
 import 'package:http/http.dart' as http;
@@ -54,5 +55,20 @@ class APIService {
     }
 
     throw 'Invalid Token';
+  }
+
+  Future<EventResponseModel> registerEvent(
+      EventRequestModel eventRequestModel) async {
+    final response = await http.post(getRequestUrl('events'),
+        body: json.encode(eventRequestModel.toJson()), headers: requestHeaders);
+
+    EventResponseModel responseMaped =
+        EventResponseModel.fromJson(json.decode(response.body));
+
+    if (response.statusCode == 201) {
+      return responseMaped;
+    }
+
+    throw responseMaped;
   }
 }

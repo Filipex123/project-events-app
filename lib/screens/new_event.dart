@@ -1,10 +1,8 @@
-import 'package:brota_ai_app/components/date_input_field.dart';
+import 'package:brota_ai_app/components/date_time_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
-import 'package:brota_ai_app/models/signup_model.dart';
+import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/services/api_service.dart';
-import 'package:brota_ai_app/components/background.dart';
-import 'package:brota_ai_app/components/logo.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,15 +18,17 @@ class NewEventScreen extends StatefulWidget {
 }
 
 class _NewEventScreenState extends State<NewEventScreen> {
-  TextEditingController minAge = TextEditingController();
-  TextEditingController maxAge = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController minAgeController = TextEditingController();
+  TextEditingController maxAgeController = TextEditingController();
+  TextEditingController localeController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController sportController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
+  TextEditingController eventTimeController = TextEditingController();
 
-  SignUpRequestModel requestModel = SignUpRequestModel();
+  EventRequestModel requestModel =
+      EventRequestModel(eventOwner: "a4115fc7-e076-4184-ac17-72ad153d9c8b");
 
   List<DropdownMenuItem<String>> sexItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
@@ -41,19 +41,21 @@ class _NewEventScreenState extends State<NewEventScreen> {
     super.initState();
 
     nameController.addListener(handleOnChangeName);
-    sportController.addListener(handleOnChangeCpf);
-    minAge.addListener(handleOnChangeEmail);
-    passwordController.addListener(handleOnChangePassword);
-    confirmPasswordController.addListener(handleOnChangeConfirmPassword);
+    sportController.addListener(handleOnChangeSport);
+    minAgeController.addListener(handleOnChangeMinAge);
+    maxAgeController.addListener(handleOnChangeMaxAge);
+    localeController.addListener(handleOnChangeLocale);
+    descriptionController.addListener(handleOnChangeDescription);
   }
 
   @override
   void dispose() {
     nameController.dispose();
     sportController.dispose();
-    minAge.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    minAgeController.dispose();
+    maxAgeController.dispose();
+    localeController.dispose();
+    descriptionController.dispose();
     eventDateController.dispose();
     super.dispose();
   }
@@ -62,25 +64,29 @@ class _NewEventScreenState extends State<NewEventScreen> {
     requestModel.name = nameController.text;
   }
 
-  void handleOnChangeCpf() {
-    requestModel.cpf = sportController.text;
+  void handleOnChangeSport() {
+    requestModel.sport = sportController.text;
   }
 
-  void handleOnChangeEmail() {
-    requestModel.email = minAge.text;
+  void handleOnChangeMinAge() {
+    requestModel.minAge = minAgeController.text;
   }
 
-  void handleOnChangePassword() {
-    requestModel.password = passwordController.text;
+  void handleOnChangeMaxAge() {
+    requestModel.maxAge = maxAgeController.text;
   }
 
-  void handleOnChangeConfirmPassword() {
-    requestModel.confirmPassword = confirmPasswordController.text;
+  void handleOnChangeLocale() {
+    requestModel.locale = localeController.text;
+  }
+
+  void handleOnChangeDescription() {
+    requestModel.description = descriptionController.text;
   }
 
   void handleOnChangeDate(DateTime? selectedDate) {
     if (selectedDate != null) {
-      requestModel.birthDate = selectedDate;
+      requestModel.initialDateTime = selectedDate;
     }
   }
 
@@ -90,15 +96,16 @@ class _NewEventScreenState extends State<NewEventScreen> {
     }
   }
 
-  void handleOnClickSignUpButton() {
+  void handleOnClickRegisterButton() {
     APIService apiService = APIService();
+    print("Request sendo enviado: " + requestModel.toString());
 
-    apiService.signUp(requestModel).then((response) {
+    apiService.registerEvent(requestModel).then((response) {
       showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) => SimpleModal(
-                message: 'Usuário criado com sucesso.',
+                message: 'Evento criado com sucesso.',
                 modalTitle: "Sucesso",
                 closeButtonText: 'OK',
                 closeCallBack: () {
@@ -110,15 +117,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) => const SimpleModal(
-                message: 'Erro ao se cadastrar.',
+                message: 'Erro ao criar Evento.',
                 modalTitle: "Erro",
                 closeButtonText: 'TENTAR NOVAMENTE',
               ));
     });
-  }
-
-  void handleOnPressLogin() {
-    Navigator.pop(context);
   }
 
   @override
@@ -171,7 +174,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     TextInputField(
                       controller: nameController,
                       icon: FontAwesomeIcons.pen,
-                      hint: 'Name',
+                      hint: 'Nome',
                       maxLength: 255,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
@@ -187,18 +190,18 @@ class _NewEventScreenState extends State<NewEventScreen> {
                     Row(
                       children: [
                         TextInputField(
-                          controller: minAge,
+                          controller: minAgeController,
                           hint: 'Idade mínima',
-                          hadWidth: 250,
+                          hadWidth: 232,
                           maxLength: 2,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
                         ),
                         const Spacer(),
                         TextInputField(
-                          controller: maxAge,
+                          controller: maxAgeController,
                           hint: 'Idade máxima',
-                          hadWidth: 250,
+                          hadWidth: 232,
                           maxLength: 2,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
@@ -206,40 +209,34 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       ],
                     ),
                     TextInputField(
-                      controller: passwordController,
+                      controller: localeController,
                       icon: FontAwesomeIcons.mapSigns,
                       hint: 'Localização',
                       maxLength: 30,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
-                    TextInputField(
-                      controller: confirmPasswordController,
-                      icon: FontAwesomeIcons.key,
-                      hint: 'Confirme sua Senha',
-                      maxLength: 30,
-                      inputType: TextInputType.text,
-                      inputAction: TextInputAction.next,
-                    ),
-                    Row(
-                      children: [
-                        DateInputField(
-                          controller: eventDateController,
-                          icon: FontAwesomeIcons.calendar,
-                          hint: 'Data',
-                          hadWidth: 250,
-                          handleOnChange: handleOnChangeDate,
-                        ),
-                        const Spacer(),
-                        DateInputField(
-                          controller: eventDateController,
-                          icon: FontAwesomeIcons.clock,
-                          hint: 'Hora',
-                          hadWidth: 250,
-                          handleOnChange: handleOnChangeDate,
-                        ),
-                      ],
-                    ),
+
+                    // Row(
+                    // children: const [
+                    const BasicDateTimeField(),
+                    // DateInputField(
+                    //   controller: eventDateController,
+                    //   icon: FontAwesomeIcons.calendar,
+                    //   hint: 'Data',
+                    //   hadWidth: 232,
+                    //   handleOnChange: handleOnChangeDate,
+                    // ),
+                    // const Spacer(),
+                    // DateInputField(
+                    //   controller: eventTimeController,
+                    //   icon: FontAwesomeIcons.clock,
+                    //   hint: 'Hora',
+                    //   hadWidth: 232,
+                    //   handleOnChange: handleOnChangeDate,
+                    // ),
+                    // ],
+                    // ),
                     DropdownButtonFormField(
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -269,7 +266,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         onChanged: handleOnChangeSex,
                         items: sexItems),
                     TextInputField(
-                      controller: confirmPasswordController,
+                      controller: descriptionController,
                       icon: FontAwesomeIcons.readme,
                       hint: 'Descrição',
                       maxLength: 30,
@@ -296,7 +293,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                               fontFamily: 'ABeeZee',
                             ),
                           ),
-                          onPressed: handleOnClickSignUpButton,
+                          onPressed: handleOnClickRegisterButton,
                         ),
                       ),
                     ),
