@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/components/event_card.dart';
 import 'package:brota_ai_app/components/snapping-sheet/grabbing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
@@ -40,7 +41,7 @@ class SimpleSnappingSheet extends StatelessWidget {
       snappingPositions: positions,
       initialSnappingPosition: positions[1],
       grabbing: const GrabbingWidget(),
-      grabbingHeight: 70,
+      grabbingHeight: 65,
       sheetAbove: SnappingSheetContent(
         child: Container(
           alignment: Alignment.bottomRight,
@@ -48,6 +49,7 @@ class SimpleSnappingSheet extends StatelessWidget {
           child: FloatingActionButton(
             onPressed: () {
               Scaffold.of(context).openDrawer();
+              FocusScope.of(context).requestFocus(FocusNode());
             },
             backgroundColor: Colors.white,
             child: const Icon(Icons.menu),
@@ -56,22 +58,38 @@ class SimpleSnappingSheet extends StatelessWidget {
       ),
       sheetBelow: SnappingSheetContent(
         draggable: true,
-        childScrollController: listViewController,
         child: Container(
           color: Colors.white,
-          child: ListView.builder(
+          child: SingleChildScrollView(
             controller: listViewController,
-            itemBuilder: (context, index) {
-              return Container(
-                margin: const EdgeInsets.all(15),
-                color: Colors.green[200],
-                height: 100,
-                child: Center(
-                  child: Text("Evento " + index.toString()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:  [
+                Container(
+                  margin: EdgeInsets.fromLTRB(28, 8, 0, 2),
+                  child: Text(
+                    'Eventos próximos',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'ABeeZee',
+                    ),
+                  
+                    textAlign: TextAlign.left,
+                  ),
                 ),
-              );
-            },
-          ),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+                EventCard(),
+              ],
+            ),
+          ) ,
         ),
       ),
     );
