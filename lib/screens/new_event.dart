@@ -8,6 +8,7 @@ import 'package:brota_ai_app/components/logo.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
 
 class NewEventScreen extends StatefulWidget {
   static const String id = 'new_event_screen';
@@ -19,19 +20,20 @@ class NewEventScreen extends StatefulWidget {
 }
 
 class _NewEventScreenState extends State<NewEventScreen> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController minAge = TextEditingController();
+  TextEditingController maxAge = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController cpfController = TextEditingController();
+  TextEditingController sportController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController birthDateController = TextEditingController();
+  TextEditingController eventDateController = TextEditingController();
 
   SignUpRequestModel requestModel = SignUpRequestModel();
 
   List<DropdownMenuItem<String>> sexItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
     const DropdownMenuItem(child: Text("Feminino"), value: "F"),
-    const DropdownMenuItem(child: Text("Prefiro não dizer"), value: "P"),
+    const DropdownMenuItem(child: Text("Qualquer um"), value: "P"),
   ];
 
   @override
@@ -39,8 +41,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
     super.initState();
 
     nameController.addListener(handleOnChangeName);
-    cpfController.addListener(handleOnChangeCpf);
-    emailController.addListener(handleOnChangeEmail);
+    sportController.addListener(handleOnChangeCpf);
+    minAge.addListener(handleOnChangeEmail);
     passwordController.addListener(handleOnChangePassword);
     confirmPasswordController.addListener(handleOnChangeConfirmPassword);
   }
@@ -48,11 +50,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
   @override
   void dispose() {
     nameController.dispose();
-    cpfController.dispose();
-    emailController.dispose();
+    sportController.dispose();
+    minAge.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    birthDateController.dispose();
+    eventDateController.dispose();
     super.dispose();
   }
 
@@ -61,11 +63,11 @@ class _NewEventScreenState extends State<NewEventScreen> {
   }
 
   void handleOnChangeCpf() {
-    requestModel.cpf = cpfController.text;
+    requestModel.cpf = sportController.text;
   }
 
   void handleOnChangeEmail() {
-    requestModel.email = emailController.text;
+    requestModel.email = minAge.text;
   }
 
   void handleOnChangePassword() {
@@ -76,7 +78,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
     requestModel.confirmPassword = confirmPasswordController.text;
   }
 
-  void handleOnChangeBirthDate(DateTime? selectedDate) {
+  void handleOnChangeDate(DateTime? selectedDate) {
     if (selectedDate != null) {
       requestModel.birthDate = selectedDate;
     }
@@ -122,31 +124,44 @@ class _NewEventScreenState extends State<NewEventScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    return Scaffold(
-      backgroundColor: const Color(0xFF198754),
-      body: Background(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xFF198754),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(100.0),
+          child: AppBar(
+            toolbarHeight: 130.0,
+            titleSpacing: 0,
+            backgroundColor: const Color(0xFF125C3A),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Criar evento',
+                    style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontFamily: 'ABeeZee',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white),
+                  ),
+                ),
+                Image.asset(
+                  "assets/images/laterallogo.png",
+                  height: 130,
+                  width: 130,
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Column(
           children: <Widget>[
             const Spacer(),
-            const Logo(),
-            Expanded(
-              child: Container(
-                alignment: Alignment.topCenter,
-                padding: const EdgeInsets.fromLTRB(0, 13, 0, 0),
-                child: Text(
-                  'Brota aí',
-                  style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontFamily: 'ABeeZee',
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.height * 0.065,
-                      color: Colors.white),
-                ),
-              ),
-            ),
             Container(
-              height: size.height * 0.5,
+              height: size.height * 0.75,
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
               margin: const EdgeInsets.only(left: 16, right: 16),
               child: SingleChildScrollView(
@@ -155,34 +170,46 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   children: <Widget>[
                     TextInputField(
                       controller: nameController,
-                      icon: FontAwesomeIcons.user,
+                      icon: FontAwesomeIcons.pen,
                       hint: 'Name',
                       maxLength: 255,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
                     TextInputField(
-                      controller: cpfController,
-                      icon: FontAwesomeIcons.idCard,
-                      hint: 'CPF',
+                      controller: sportController,
+                      icon: FontAwesomeIcons.basketballBall,
+                      hint: 'Esporte',
                       maxLength: 11,
-                      inputType: TextInputType.number,
+                      inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
-                    TextInputField(
-                      controller: emailController,
-                      icon: FontAwesomeIcons.envelope,
-                      hint: 'Email',
-                      maxLength: 255,
-                      inputType: TextInputType.emailAddress,
-                      inputAction: TextInputAction.next,
+                    Row(
+                      children: [
+                        TextInputField(
+                          controller: minAge,
+                          hint: 'Idade mínima',
+                          hadWidth: 250,
+                          maxLength: 2,
+                          inputType: TextInputType.number,
+                          inputAction: TextInputAction.next,
+                        ),
+                        const Spacer(),
+                        TextInputField(
+                          controller: maxAge,
+                          hint: 'Idade máxima',
+                          hadWidth: 250,
+                          maxLength: 2,
+                          inputType: TextInputType.number,
+                          inputAction: TextInputAction.next,
+                        ),
+                      ],
                     ),
                     TextInputField(
                       controller: passwordController,
-                      icon: FontAwesomeIcons.key,
-                      hint: 'Senha',
+                      icon: FontAwesomeIcons.mapSigns,
+                      hint: 'Localização',
                       maxLength: 30,
-                      isPassword: true,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
@@ -191,15 +218,27 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       icon: FontAwesomeIcons.key,
                       hint: 'Confirme sua Senha',
                       maxLength: 30,
-                      isPassword: true,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
-                    DateInputField(
-                      controller: birthDateController,
-                      icon: FontAwesomeIcons.calendar,
-                      hint: 'Data de Nascimento',
-                      handleOnChange: handleOnChangeBirthDate,
+                    Row(
+                      children: [
+                        DateInputField(
+                          controller: eventDateController,
+                          icon: FontAwesomeIcons.calendar,
+                          hint: 'Data',
+                          hadWidth: 250,
+                          handleOnChange: handleOnChangeDate,
+                        ),
+                        const Spacer(),
+                        DateInputField(
+                          controller: eventDateController,
+                          icon: FontAwesomeIcons.clock,
+                          hint: 'Hora',
+                          hadWidth: 250,
+                          handleOnChange: handleOnChangeDate,
+                        ),
+                      ],
                     ),
                     DropdownButtonFormField(
                         decoration: InputDecoration(
@@ -220,7 +259,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                                 color: Colors.black.withOpacity(0.3),
                               ),
                             ),
-                            hintText: 'Sexo',
+                            hintText: 'Gênero',
                             hintStyle: kHintInputText,
                             filled: true,
                             fillColor: Colors.white,
@@ -229,10 +268,18 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         //value: 'USA',
                         onChanged: handleOnChangeSex,
                         items: sexItems),
+                    TextInputField(
+                      controller: confirmPasswordController,
+                      icon: FontAwesomeIcons.readme,
+                      hint: 'Descrição',
+                      maxLength: 30,
+                      inputType: TextInputType.text,
+                      inputAction: TextInputAction.next,
+                    ),
                     Container(
                       padding: const EdgeInsets.only(top: 4),
                       height: size.height * 0.075,
-                      child: Container(
+                      child: SizedBox(
                         height: size.height * 0.075,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -243,7 +290,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                             ),
                           ),
                           child: const Text(
-                            'Cadastrar-se',
+                            'Criar',
                             style: TextStyle(
                               fontSize: 20,
                               fontFamily: 'ABeeZee',
@@ -261,37 +308,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                 color: Colors.white.withOpacity(0.4),
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(
-                  'Já tem conta?',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'ABeeZee',
-                  ),
-                ),
-                TextButton(
-                  child: const Text(
-                    'Entre',
-                    style: TextStyle(
-                        color: Color(0xFFD6822C),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        fontFamily: 'ABeeZee',
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(0, 4),
-                            blurRadius: 4,
-                            color: Color.fromRGBO(0, 0, 0, 0.25),
-                          ),
-                        ]),
-                  ),
-                  onPressed: handleOnPressLogin,
-                )
-              ],
-            ),
+            const Spacer()
           ],
         ),
       ),

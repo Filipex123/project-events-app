@@ -4,6 +4,7 @@ import 'package:brota_ai_app/screens/my_splash_screen.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/screens/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
@@ -15,12 +16,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     return MaterialApp(
       title: 'Brota aí',
       theme: ThemeData(
-          colorScheme: const ColorScheme.light(
-        primary: Color(0xFF198754),
-      )),
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF198754),
+        ),
+      ),
       home: HomeScreen(),
       routes: {
         LoginScreen.id: (context) => const LoginScreen(),

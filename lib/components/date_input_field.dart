@@ -7,6 +7,7 @@ class DateInputField extends StatelessWidget {
       {Key? key,
       required this.icon,
       required this.hint,
+      this.hadWidth,
       this.handleOnChange,
       this.controller,
       this.validator})
@@ -14,6 +15,7 @@ class DateInputField extends StatelessWidget {
 
   final IconData icon;
   final String hint;
+  final double? hadWidth;
   final Function(DateTime?)? handleOnChange;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -25,7 +27,7 @@ class DateInputField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Container(
         height: size.height * 0.08,
-        width: size.width - 32,
+        width: size.width - (hadWidth ?? 32),
         child: Center(
           child: TextFormField(
             controller: controller,

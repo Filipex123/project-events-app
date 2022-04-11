@@ -4,17 +4,21 @@ import 'package:flutter/material.dart';
 class TextInputField extends StatelessWidget {
   const TextInputField(
       {Key? key,
-      required this.icon,
+      this.icon,
+      this.iconSize,
       required this.hint,
       this.inputType,
       this.inputAction,
       this.maxLength,
       this.isPassword,
       this.handleOnChange,
-      this.controller})
+      this.controller,
+      this.hadWidth,
+      this.hadHeight})
       : super(key: key);
 
-  final IconData icon;
+  final IconData? icon;
+  final double? iconSize;
   final String hint;
   final TextInputType? inputType;
   final TextInputAction? inputAction;
@@ -22,15 +26,17 @@ class TextInputField extends StatelessWidget {
   final bool? isPassword;
   final Function(String)? handleOnChange;
   final TextEditingController? controller;
+  final double? hadWidth;
+  final double? hadHeight;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Container(
-        height: size.height * 0.08,
-        width: size.width - 32,
+      child: SizedBox(
+        height: size.height * (hadHeight ?? 0.08),
+        width: size.width - (hadWidth ?? 32),
         child: Center(
           child: TextField(
             controller: controller,
@@ -45,14 +51,7 @@ class TextInputField extends StatelessWidget {
                   ),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Icon(
-                    icon,
-                    size: 28,
-                    color: Colors.black.withOpacity(0.3),
-                  ),
-                ),
+                prefixIcon: hadIcon(icon),
                 hintText: hint,
                 hintStyle: kHintInputText,
                 filled: true,
@@ -67,5 +66,19 @@ class TextInputField extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  hadIcon(IconData? icon) {
+    if (icon != null) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Icon(
+          icon,
+          size: iconSize ?? 28,
+          color: Colors.black.withOpacity(0.3),
+        ),
+      );
+    }
+    return null;
   }
 }
