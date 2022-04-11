@@ -8,7 +8,7 @@ class GoogleSimpleMap extends StatefulWidget {
 }
 
 class GoogleSimpleMapState extends State<GoogleSimpleMap> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     // Brasília cordinates
@@ -18,7 +18,7 @@ class GoogleSimpleMapState extends State<GoogleSimpleMap> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       body: GoogleMap(
         mapType: MapType.normal,
         zoomControlsEnabled: false,
@@ -26,6 +26,9 @@ class GoogleSimpleMapState extends State<GoogleSimpleMap> {
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
+        },
+        onTap: (latlong) {
+           FocusScope.of(context).requestFocus(FocusNode());
         },
       )
     );
