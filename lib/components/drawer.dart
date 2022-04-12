@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
@@ -35,26 +36,36 @@ class DrawerMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Color(0xFF198754),
+           DrawerHeader(
+            decoration: const BoxDecoration(
+                 color: Color(0xFF198754),
             ),
-            child: Text('Drawer Header'),
+            
+            child: Image.asset('assets/images/perfil.png'),            
           ),
-          ListTile(
-            //colocar um Icon
+          ListTile(                     
+            leading: Icon(Icons.add),
             title: const Text('Criar evento'),
-            onTap: () {
+            onTap: () {              
               Navigator.pushNamed(context, NewEventScreen.id);
             },
           ),
           ListTile(
-            title: const Text('Item 2'),
+            leading: Icon(Icons.event),
+            title: const Text('Meus Eventos'),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
+            leading: Icon(Icons.settings),
+            title: const Text('Editar Evento'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
             title: const Text('Sair'),
             onTap: () {
               _handleOnClickLogout(context);
