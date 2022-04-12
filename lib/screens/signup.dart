@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:brota_ai_app/components/date_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
@@ -6,6 +8,7 @@ import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/logo.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
+import 'package:brota_ai_app/utils/validations/signup_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -89,8 +92,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void handleOnClickSignUpButton() {
-    APIService apiService = APIService();
+    log(requestModel.toJson().toString());
 
+    List<String> errors = SignUpValidation().validate(requestModel);
+    
+    if(errors.length > 0){
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => 
+          SimpleModal(
+            message: errors.join('\n'),
+            modalTitle: "Erro de preenchimento",
+            closeButtonText: 'OK',
+          )
+      );
+      return;
+    }
+
+    APIService apiService = APIService();
     apiService.signUp(requestModel).then((response) {
       showDialog(
           barrierDismissible: false,

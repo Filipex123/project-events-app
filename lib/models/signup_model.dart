@@ -37,7 +37,7 @@ class SignUpRequestModel implements RequestModel {
       'email': email,
       'password': password,
       'sex': sex,
-      'birthDate': birthDate?.toUtc().toString()
+      'birthDate': birthDate!.toUtc().toString()
     };
 
     return map;
