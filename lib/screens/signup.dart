@@ -95,18 +95,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     log(requestModel.toJson().toString());
 
     List<String> errors = SignUpValidation().validate(requestModel);
-    
-    if(errors.length > 0){
+
+    if (errors.length > 0) {
       showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) => 
-          SimpleModal(
-            message: errors.join('\n'),
-            modalTitle: "Erro de preenchimento",
-            closeButtonText: 'OK',
-          )
-      );
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) => SimpleModal(
+                message: errors.join('\n'),
+                modalTitle: "Erro de preenchimento",
+                closeButtonText: 'OK',
+              ));
       return;
     }
 
@@ -157,11 +155,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 child: Text(
                   'Brota aí',
                   style: TextStyle(
-                      fontStyle: FontStyle.normal,
-                      fontFamily: 'ABeeZee',
-                      fontWeight: FontWeight.w500,
-                      fontSize: size.height * 0.065,
-                      color: Colors.white),
+                    fontStyle: FontStyle.normal,
+                    fontFamily: 'ABeeZee',
+                    fontWeight: FontWeight.w500,
+                    fontSize: size.height * 0.065,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),

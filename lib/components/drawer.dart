@@ -36,37 +36,94 @@ class DrawerMenu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-           DrawerHeader(
+          DrawerHeader(
             decoration: const BoxDecoration(
-                 color: Color(0xFF198754),
+              color: Color(0xFF198754),
             ),
-            
-            child: Image.asset('assets/images/perfil.png'),            
+            margin: EdgeInsets.only(left: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(left: 0),
+                  height: 90,
+                  margin: const EdgeInsets.only(top: 0),
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(
+                    'assets/images/perfil.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                // Image.asset(
+                //   'assets/images/lateralDrawer.png',
+                //   height: 140,
+                //   width: 50,
+                // ),
+              ],
+            ),
           ),
-          ListTile(                     
-            leading: Icon(Icons.add),
-            title: const Text('Criar evento'),
-            onTap: () {              
+          ListTile(
+            leading: const Icon(Icons.add),
+            title: const Text(
+              'Criar evento',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+            onTap: () {
               Navigator.pushNamed(context, NewEventScreen.id);
             },
           ),
           ListTile(
-            leading: Icon(Icons.event),
-            title: const Text('Meus Eventos'),
+            leading: const Icon(Icons.event),
+            title: const Text(
+              'Meus Eventos',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: const Text('Editar Evento'),
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              'Editar Evento',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+            focusColor: const Color(0xFFD6822C),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: const Text('Sair'),
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text(
+              'Sair',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
               _handleOnClickLogout(context);
             },

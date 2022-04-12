@@ -99,23 +99,18 @@ class _NewEventScreenState extends State<NewEventScreen> {
   void handleOnClickRegisterButton() {
     log("Request sendo enviado: " + requestModel.toJson().toString());
     List<String> errors = NewEventValidation().validate(requestModel);
-    
-    if(errors.length > 0){
+
+    if (errors.length > 0) {
       showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) => 
-          SimpleModal(
-            message: errors.join('\n'),
-            modalTitle: "Erro de preenchimento",
-            closeButtonText: 'OK',
-          )
-      );
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) => SimpleModal(
+                message: errors.join('\n'),
+                modalTitle: "Erro de preenchimento",
+                closeButtonText: 'OK',
+              ));
       return;
     }
-
-    return log('foi');
-
     APIService apiService = APIService();
 
     apiService.registerEvent(requestModel).then((response) {
