@@ -19,23 +19,6 @@ class Logo extends StatelessWidget {
           width: size.width * 0.8,
         ),
       ),
-      // Container(
-      //   height: size.height * 0.15,
-      //   alignment: Alignment.center,
-      //   padding: const EdgeInsets.fromLTRB(11, 0, 11, 50),
-      //   child: const Text(
-      //     'Brota aí',
-      //     style: TextStyle(
-      //       fontStyle: FontStyle.normal,
-      //       fontFamily: 'ABeeZee',
-      //       fontWeight: FontWeight.w500,
-      //       fontSize: 50,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      // ),
-      //   ],
-      // ),
     );
   }
 }

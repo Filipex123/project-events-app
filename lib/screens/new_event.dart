@@ -98,7 +98,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   void handleOnClickRegisterButton() {
     APIService apiService = APIService();
-    print("Request sendo enviado: " + requestModel.toString());
 
     apiService.registerEvent(requestModel).then((response) {
       showDialog(
@@ -129,6 +128,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xFF198754),
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100.0),
@@ -164,7 +164,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
           children: <Widget>[
             const Spacer(),
             Container(
-              height: size.height * 0.75,
+              height: size.height * 0.73,
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
               margin: const EdgeInsets.only(left: 16, right: 16),
               child: SingleChildScrollView(
@@ -184,6 +184,22 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       icon: FontAwesomeIcons.basketballBall,
                       hint: 'Esporte',
                       maxLength: 11,
+                      inputType: TextInputType.text,
+                      inputAction: TextInputAction.next,
+                    ),
+                    TextInputField(
+                      controller: descriptionController,
+                      icon: FontAwesomeIcons.readme,
+                      hint: 'Descrição',
+                      maxLength: 30,
+                      inputType: TextInputType.text,
+                      inputAction: TextInputAction.next,
+                    ),
+                    TextInputField(
+                      controller: localeController,
+                      icon: FontAwesomeIcons.mapSigns,
+                      hint: 'Localização',
+                      maxLength: 30,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
@@ -208,70 +224,37 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         ),
                       ],
                     ),
-                    TextInputField(
-                      controller: localeController,
-                      icon: FontAwesomeIcons.mapSigns,
-                      hint: 'Localização',
-                      maxLength: 30,
-                      inputType: TextInputType.text,
-                      inputAction: TextInputAction.next,
-                    ),
-
-                    // Row(
-                    // children: const [
                     const BasicDateTimeField(),
-                    // DateInputField(
-                    //   controller: eventDateController,
-                    //   icon: FontAwesomeIcons.calendar,
-                    //   hint: 'Data',
-                    //   hadWidth: 232,
-                    //   handleOnChange: handleOnChangeDate,
-                    // ),
-                    // const Spacer(),
-                    // DateInputField(
-                    //   controller: eventTimeController,
-                    //   icon: FontAwesomeIcons.clock,
-                    //   hint: 'Hora',
-                    //   hadWidth: 232,
-                    //   handleOnChange: handleOnChangeDate,
-                    // ),
-                    // ],
-                    // ),
-                    DropdownButtonFormField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xFFD6822C), width: 2.0),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            prefixIcon: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20.0),
-                              child: Icon(
-                                FontAwesomeIcons.genderless,
-                                size: 28,
-                                color: Colors.black.withOpacity(0.3),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                            ),
-                            hintText: 'Gênero',
-                            hintStyle: kHintInputText,
-                            filled: true,
-                            fillColor: Colors.white,
-                            counterText: ''),
-                        style: kInputText,
-                        //value: 'USA',
-                        onChanged: handleOnChangeSex,
-                        items: sexItems),
-                    TextInputField(
-                      controller: descriptionController,
-                      icon: FontAwesomeIcons.readme,
-                      hint: 'Descrição',
-                      maxLength: 30,
-                      inputType: TextInputType.text,
-                      inputAction: TextInputAction.next,
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color(0xFFD6822C), width: 2.0),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Icon(
+                                  FontAwesomeIcons.genderless,
+                                  size: 28,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
+                              ),
+                              hintText: 'Gênero',
+                              hintStyle: kHintInputText,
+                              filled: true,
+                              fillColor: Colors.white,
+                              counterText: ''),
+                          style: kInputText,
+                          //value: 'USA',
+                          onChanged: handleOnChangeSex,
+                          items: sexItems),
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 4),

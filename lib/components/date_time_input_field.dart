@@ -55,6 +55,7 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
                 counterText: ''),
             obscureText: false,
             style: kInputText,
+            keyboardType: TextInputType.none,
             textInputAction: TextInputAction.next,
             onTap: () async {
               DateTime? pickedDate = await showDatePicker(
@@ -65,14 +66,16 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
               );
 
               if (pickedDate != null) {
-                await showTimePicker(
+                final pickedTime = await showTimePicker(
                   context: context,
-                  initialTime:
-                      // TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                      TimeOfDay.fromDateTime(DateTime.now()),
+                  initialTime: TimeOfDay.fromDateTime(DateTime.now()),
                 );
+
+                DateTime dateTime =
+                    DateTimeField.combine(pickedDate, pickedTime);
+
                 String formattedDate =
-                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                    DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
 
                 setState(() {
                   dateTimeController.text = formattedDate;
