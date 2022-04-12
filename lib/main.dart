@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           primary: Color(0xFF198754),
         ),
       ),
-      home: HomeScreen(),
+      home: const MySplashScreen(),
       routes: {
         LoginScreen.id: (context) => const LoginScreen(),
         SignUpScreen.id: (context) => const SignUpScreen(),

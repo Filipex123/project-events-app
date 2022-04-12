@@ -7,16 +7,22 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 
 class BasicDateTimeField extends StatefulWidget {
-  const BasicDateTimeField({Key? key}) : super(key: key);
+  BasicDateTimeField(
+      {Key? key,
+      required this.dateTimeController,
+      required this.handleOnChange})
+      : super(key: key);
+
+  Function handleOnChange;
+  TextEditingController dateTimeController = TextEditingController();
 
   @override
   _BasicDateTimeFieldState createState() => _BasicDateTimeFieldState();
 }
 
 class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
-  Function(DateTime?)? handleOnChange;
+  //Function(String?)? handleOnChange;
   late DateTime _selectedDate;
-  TextEditingController dateTimeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
         width: size.width - 32,
         child: Center(
           child: TextField(
-            controller: dateTimeController,
+            controller: widget.dateTimeController,
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -78,11 +84,13 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
                     DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
 
                 setState(() {
-                  dateTimeController.text = formattedDate;
+                  widget.dateTimeController.text = formattedDate;
+
+                  widget.handleOnChange();
                 });
               } else {
                 setState(() {
-                  dateTimeController.text = 'Nenhuma data selecionada';
+                  widget.dateTimeController.text = 'Nenhuma data selecionada';
                 });
               }
             },

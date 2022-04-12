@@ -27,8 +27,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
   TextEditingController eventDateController = TextEditingController();
   TextEditingController eventTimeController = TextEditingController();
 
-  EventRequestModel requestModel =
-      EventRequestModel(eventOwner: "a4115fc7-e076-4184-ac17-72ad153d9c8b");
+  EventRequestModel requestModel = EventRequestModel();
 
   List<DropdownMenuItem<String>> sexItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
@@ -84,10 +83,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
     requestModel.description = descriptionController.text;
   }
 
-  void handleOnChangeDate(DateTime? selectedDate) {
-    if (selectedDate != null) {
-      requestModel.initialDateTime = selectedDate;
-    }
+  void handleOnChangeDate() {
+    requestModel.initialDateTime = eventDateController.text;
   }
 
   void handleOnChangeSex(String? selectedValue) {
@@ -191,7 +188,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       controller: descriptionController,
                       icon: FontAwesomeIcons.readme,
                       hint: 'Descrição',
-                      maxLength: 30,
+                      maxLength: 255,
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
@@ -224,7 +221,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         ),
                       ],
                     ),
-                    const BasicDateTimeField(),
+                    BasicDateTimeField(
+                      dateTimeController: eventDateController,
+                      handleOnChange: handleOnChangeDate,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: DropdownButtonFormField(

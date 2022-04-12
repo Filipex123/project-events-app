@@ -13,7 +13,6 @@ class EventResponseModel {
 }
 
 class EventRequestModel implements RequestModel {
-  String? eventOwner;
   String? name;
   String? sport;
   String? minAge;
@@ -21,11 +20,10 @@ class EventRequestModel implements RequestModel {
   String? locale;
   String? description;
   String? sex;
-  DateTime? initialDateTime;
+  String? initialDateTime;
 
   EventRequestModel(
-      {this.eventOwner,
-      this.minAge,
+      {this.minAge,
       this.maxAge,
       this.locale,
       this.description,
@@ -37,7 +35,6 @@ class EventRequestModel implements RequestModel {
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'eventOwner': eventOwner,
       'name': name,
       'sport': sport,
       'minAge': minAge,
@@ -45,7 +42,7 @@ class EventRequestModel implements RequestModel {
       'locale': locale,
       'description': description,
       'sex': sex,
-      'initialDateTime': initialDateTime!.toUtc().toString()
+      'initialDateTime': initialDateTime
     };
 
     return map;
@@ -54,8 +51,6 @@ class EventRequestModel implements RequestModel {
   @override
   String toString() {
     return "{" +
-        eventOwner! +
-        ", " +
         name! +
         ", " +
         sport! +
@@ -70,7 +65,7 @@ class EventRequestModel implements RequestModel {
         ", " +
         (sex ?? "") +
         ", " +
-        initialDateTime!.toUtc().toString() +
+        initialDateTime! +
         "}";
   }
 }
