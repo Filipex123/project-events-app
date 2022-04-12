@@ -22,9 +22,9 @@ class NewEventValidation extends Validation {
       returnErrors.add('Campo localização vazio');
     }
 
-    if(!requiredFieldDate(input.initialDateTime)){
-      returnErrors.add('Campo de data e hora vazio');
-    }
+    // if(!requiredFieldDate(input.initialDateTime)){
+    //   returnErrors.add('Campo de data e hora vazio');
+    // }
 
     if(!requiredField(input.sex)){
       returnErrors.add('Campo de gênero vazio');
