@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:brota_ai_app/components/date_time_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
+import 'package:brota_ai_app/utils/validations/new_event_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
@@ -97,8 +100,26 @@ class _NewEventScreenState extends State<NewEventScreen> {
   }
 
   void handleOnClickRegisterButton() {
+    log("Request sendo enviado: " + requestModel.toJson().toString());
+    List<String> errors = NewEventValidation().validate(requestModel);
+    
+    if(errors.length > 0){
+      showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => 
+          SimpleModal(
+            message: errors.join('\n'),
+            modalTitle: "Erro de preenchimento",
+            closeButtonText: 'OK',
+          )
+      );
+      return;
+    }
+
+    return log('foi');
+
     APIService apiService = APIService();
-    print("Request sendo enviado: " + requestModel.toString());
 
     apiService.registerEvent(requestModel).then((response) {
       showDialog(

@@ -45,7 +45,7 @@ class EventRequestModel implements RequestModel {
       'locale': locale,
       'description': description,
       'sex': sex,
-      'initialDateTime': initialDateTime!.toUtc().toString()
+      'initialDateTime': initialDateTime?.toUtc().toString()
     };
 
     return map;
