@@ -18,7 +18,7 @@ class EventCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Nome do Evento',
+                    const Text('Nome do Evento',
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: 'ABeeZee',
@@ -28,7 +28,7 @@ class EventCard extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text('12:30',
+                  const Text('12:30',
                       style: TextStyle(
                         fontSize: 20,
                         fontFamily: 'ABeeZee',

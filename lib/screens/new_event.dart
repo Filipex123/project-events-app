@@ -9,7 +9,6 @@ import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:brota_ai_app/utils/validations/new_event_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter/services.dart';
 
 class NewEventScreen extends StatefulWidget {
   static const String id = 'new_event_screen';
@@ -100,7 +99,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
     log("Request sendo enviado: " + requestModel.toJson().toString());
     List<String> errors = NewEventValidation().validate(requestModel);
 
-    if (errors.length > 0) {
+    if (errors.isNotEmpty) {
       showDialog(
           barrierDismissible: false,
           context: context,
@@ -222,7 +221,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         TextInputField(
                           controller: minAgeController,
                           hint: 'Idade mínima',
-                          hadWidth: 232,
+                          hadWidth: 250,
                           maxLength: 2,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,
@@ -231,7 +230,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                         TextInputField(
                           controller: maxAgeController,
                           hint: 'Idade máxima',
-                          hadWidth: 232,
+                          hadWidth: 250,
                           maxLength: 2,
                           inputType: TextInputType.number,
                           inputAction: TextInputAction.next,

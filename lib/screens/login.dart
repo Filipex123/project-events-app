@@ -54,18 +54,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
     apiService.login(requestModel).then((response) {
       TokenStorageService.store(response.token);
+
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
       showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) => 
-          SimpleModal(
-            message: (error as LoginResponseModel).message,
-            modalTitle: "Erro",
-            closeButtonText: 'TENTAR NOVAMENTE',
-          )
-      );
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) => SimpleModal(
+                message: (error as LoginResponseModel).message,
+                modalTitle: "Erro",
+                closeButtonText: 'TENTAR NOVAMENTE',
+              ));
     });
   }
 
@@ -127,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Container(
                         padding: const EdgeInsets.only(top: 4),
                         height: size.height * 0.075,
-                        child: Container(
+                        child: SizedBox(
                           height: size.height * 0.075,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(

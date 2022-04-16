@@ -19,19 +19,18 @@ class GoogleSimpleMapState extends State<GoogleSimpleMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.normal,
-        zoomControlsEnabled: false,
-        compassEnabled: false,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-        onTap: (latlong) {
-           FocusScope.of(context).requestFocus(FocusNode());
-        },
-      )
-    );
+        body: GoogleMap(
+      mapType: MapType.normal,
+      zoomControlsEnabled: false,
+      compassEnabled: false,
+      initialCameraPosition: _kGooglePlex,
+      onMapCreated: (GoogleMapController controller) {
+        _controller.complete(controller);
+      },
+      onTap: (latlong) {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+    ));
   }
 
   // Future<void> _goToTheLake() async {

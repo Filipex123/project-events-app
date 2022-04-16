@@ -96,7 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     List<String> errors = SignUpValidation().validate(requestModel);
 
-    if (errors.length > 0) {
+    if (errors.isNotEmpty) {
       showDialog(
           barrierDismissible: false,
           context: context,

@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

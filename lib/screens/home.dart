@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:brota_ai_app/components/drawer.dart';
 import 'package:brota_ai_app/components/google-map.dart';
 import 'package:brota_ai_app/components/home_search_bar.dart';
@@ -11,6 +9,8 @@ class HomeScreen extends StatelessWidget {
   static const String id = 'home_screen';
 
   final snappingSheetController = SnappingSheetController();
+
+  HomeScreen({Key? key}) : super(key: key);
 
   void _handleOnTapSearhBar() {
     if (snappingSheetController.isAttached) {

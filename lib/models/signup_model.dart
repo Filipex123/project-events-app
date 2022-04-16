@@ -7,7 +7,8 @@ class SignUpResponseModel {
   SignUpResponseModel({required this.token, required this.error});
 
   factory SignUpResponseModel.fromJson(Map<String, dynamic> json) {
-    return SignUpResponseModel(token: json["token"] ?? "", error: json["message"] ?? "");
+    return SignUpResponseModel(
+        token: json["token"] ?? "", error: json["message"] ?? "");
   }
 }
 
@@ -20,16 +21,15 @@ class SignUpRequestModel implements RequestModel {
   String? sex;
   DateTime? birthDate;
 
-  SignUpRequestModel({
-    this.email,
-    this.password,
-    this.confirmPassword,
-    this.name,
-    this.cpf,
-    this.sex,
-    this.birthDate
-  });
-
+  SignUpRequestModel(
+      {this.email,
+      this.password,
+      this.confirmPassword,
+      this.name,
+      this.cpf,
+      this.sex,
+      this.birthDate});
+  @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       'name': name,

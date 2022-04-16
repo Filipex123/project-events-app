@@ -1,4 +1,3 @@
-import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
@@ -39,26 +38,49 @@ class DrawerMenu extends StatelessWidget {
           DrawerHeader(
             decoration: const BoxDecoration(
               color: Color(0xFF198754),
+              image: DecorationImage(
+                alignment: Alignment.centerRight,
+                image: AssetImage("assets/images/lateralDrawer.png"),
+              ),
             ),
-            margin: EdgeInsets.only(left: 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(left: 0),
-                  height: 90,
-                  margin: const EdgeInsets.only(top: 0),
-                  alignment: Alignment.centerLeft,
-                  child: Image.asset(
-                    'assets/images/perfil.png',
-                    height: 100,
-                    width: 100,
-                  ),
+                Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(left: 0),
+                      height: 90,
+                      margin: const EdgeInsets.only(top: 0),
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset(
+                        'assets/images/perfil.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10, top: 20),
+                      child: Text(
+                        'Usuário Logado',
+                        style: TextStyle(
+                          fontStyle: FontStyle.normal,
+                          fontFamily: 'ABeeZee',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                // Image.asset(
-                //   'assets/images/lateralDrawer.png',
-                //   height: 140,
-                //   width: 50,
+                // Padding(
+                //   padding: const EdgeInsets.fromLTRB(90, 0, 0, 20),
+                //   child: Image.asset(
+                //     'assets/images/lateralDrawer.png',
+                //     height: 140,
+                //     width: 50,
+                //   ),
                 // ),
               ],
             ),

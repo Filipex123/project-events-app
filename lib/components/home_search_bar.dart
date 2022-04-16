@@ -1,4 +1,3 @@
-import 'package:brota_ai_app/components/paleta.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -18,7 +17,6 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return TextFormField(
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -49,7 +47,7 @@ class SearchBar extends StatelessWidget {
         hintStyle: TextStyle(
           fontSize: 22,
           fontFamily: 'ABeeZee',
-          color:Colors.black.withOpacity(0.2),
+          color: Colors.black.withOpacity(0.2),
         ),
       ),
       style: const TextStyle(

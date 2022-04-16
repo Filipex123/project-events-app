@@ -1,6 +1,4 @@
-import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
@@ -21,9 +19,6 @@ class BasicDateTimeField extends StatefulWidget {
 }
 
 class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
-  //Function(String?)? handleOnChange;
-  late DateTime _selectedDate;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -100,26 +95,3 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
     );
   }
 }
-
-// DateTimeField(
-//       format: DateFormat("yyyy-MM-dd HH:mm"),
-//       onShowPicker: (context, currentValue) async {
-//         final date = await showDatePicker(
-//             context: context,
-//             firstDate: DateTime(1900),
-//             initialDate: currentValue ?? DateTime.now(),
-//             lastDate: DateTime(2100));
-//         if (date != null) {
-//           final time = await showTimePicker(
-//             context: context,
-//             initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-//           );
-//           if (handleOnChange != null) {
-//             handleOnChange!(DateTimeField.combine(date, time));
-//           }
-//           return DateTimeField.combine(date, time);
-//         } else {
-//           return currentValue;
-//         }
-//       },
-//     );
