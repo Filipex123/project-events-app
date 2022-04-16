@@ -1,5 +1,7 @@
+import 'package:brota_ai_app/components/background.dart';
 import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/screens/login.dart';
+import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
 
@@ -15,46 +17,113 @@ class DrawerMenu extends StatelessWidget {
 
   void _handleOnClickLogout(BuildContext context) {
     showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) => 
-        ConfirmModal(
-          modalTitle: "Sair",
-          message: "Deseja realmente sair da aplicação?",
-          cancelButtonText: 'CANCELAR',
-          confirmButtonText: 'SAIR',
-          confirmCallback: () { _logout(context); },
-        )
-    );
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) => ConfirmModal(
+              modalTitle: "Sair",
+              message: "Deseja realmente sair da aplicação?",
+              cancelButtonText: 'CANCELAR',
+              confirmButtonText: 'SAIR',
+              confirmCallback: () {
+                _logout(context);
+              },
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        
-        child: ListView(
+      child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Color(0xFF198754),
             ),
-            child: Text('Drawer Header'),
+            margin: EdgeInsets.only(left: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(left: 0),
+                  height: 90,
+                  margin: const EdgeInsets.only(top: 0),
+                  alignment: Alignment.centerLeft,
+                  child: Image.asset(
+                    'assets/images/perfil.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                // Image.asset(
+                //   'assets/images/lateralDrawer.png',
+                //   height: 140,
+                //   width: 50,
+                // ),
+              ],
+            ),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            leading: const Icon(Icons.add),
+            title: const Text(
+              'Criar evento',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+            onTap: () {
+              Navigator.pushNamed(context, NewEventScreen.id);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.event),
+            title: const Text(
+              'Meus Eventos',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Item 2'),
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              'Editar Evento',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
+            focusColor: const Color(0xFFD6822C),
             onTap: () {
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Sair'),
+            leading: const Icon(Icons.exit_to_app),
+            title: const Text(
+              'Sair',
+              style: TextStyle(
+                fontStyle: FontStyle.normal,
+                fontFamily: 'ABeeZee',
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black,
+              ),
+            ),
             onTap: () {
               _handleOnClickLogout(context);
             },

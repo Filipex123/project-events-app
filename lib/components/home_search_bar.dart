@@ -23,7 +23,7 @@ class SearchBar extends StatelessWidget {
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withOpacity(0.1),
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(50),
@@ -40,16 +40,16 @@ class SearchBar extends StatelessWidget {
           child: Icon(
             FontAwesomeIcons.search,
             size: 22,
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.2),
           ),
         ),
         filled: true,
         fillColor: Colors.white,
-        hintText: 'Pesquisar Eventos',
+        hintText: 'Pesquisar eventos',
         hintStyle: TextStyle(
           fontSize: 22,
           fontFamily: 'ABeeZee',
-          color:Colors.black.withOpacity(0.3),
+          color:Colors.black.withOpacity(0.2),
         ),
       ),
       style: const TextStyle(
