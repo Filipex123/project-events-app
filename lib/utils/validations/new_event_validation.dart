@@ -22,7 +22,7 @@ class NewEventValidation extends Validation {
     //   returnErrors.add('Campo de data e hora vazio');
     // }
 
-    if (!requiredField(input.sex)) {
+    if (!requiredField(input.gender)) {
       returnErrors.add('Campo de gênero vazio');
     }
 

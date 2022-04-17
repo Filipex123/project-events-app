@@ -33,7 +33,7 @@ class SignUpValidation extends Validation {
       returnErrors.add('As senha não coincidêm');
     }
 
-    if (input.sex == null) {
+    if (input.gender == null) {
       returnErrors.add('Campo data de nascimento vazio');
     }
 

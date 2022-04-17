@@ -31,7 +31,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   EventRequestModel requestModel = EventRequestModel();
 
-  List<DropdownMenuItem<String>> sexItems = [
+  List<DropdownMenuItem<String>> genderItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
     const DropdownMenuItem(child: Text("Feminino"), value: "F"),
     const DropdownMenuItem(child: Text("Qualquer um"), value: "P"),
@@ -91,7 +91,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   void handleOnChangeSex(String? selectedValue) {
     if (selectedValue != null) {
-      requestModel.sex = selectedValue;
+      requestModel.gender = selectedValue;
     }
   }
 
@@ -270,7 +270,7 @@ class _NewEventScreenState extends State<NewEventScreen> {
                           style: kInputText,
                           //value: 'USA',
                           onChanged: handleOnChangeSex,
-                          items: sexItems),
+                          items: genderItems),
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 4),

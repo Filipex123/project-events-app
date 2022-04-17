@@ -19,7 +19,7 @@ class EventRequestModel implements RequestModel {
   String? maxAge;
   String? locale;
   String? description;
-  String? sex;
+  String? gender;
   String? initialDateTime;
 
   EventRequestModel(
@@ -29,7 +29,7 @@ class EventRequestModel implements RequestModel {
       this.description,
       this.name,
       this.sport,
-      this.sex,
+      this.gender,
       this.initialDateTime});
 
   @override
@@ -41,7 +41,7 @@ class EventRequestModel implements RequestModel {
       'maxAge': maxAge,
       'locale': locale,
       'description': description,
-      'sex': sex,
+      'gender': gender,
       'initialDateTime': initialDateTime
     };
 
@@ -63,7 +63,7 @@ class EventRequestModel implements RequestModel {
         ", " +
         description! +
         ", " +
-        (sex ?? "") +
+        (gender ?? "") +
         ", " +
         initialDateTime! +
         "}";

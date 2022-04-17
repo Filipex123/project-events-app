@@ -18,7 +18,7 @@ class SignUpRequestModel implements RequestModel {
   String? email;
   String? password;
   String? confirmPassword;
-  String? sex;
+  String? gender;
   DateTime? birthDate;
 
   SignUpRequestModel(
@@ -27,7 +27,7 @@ class SignUpRequestModel implements RequestModel {
       this.confirmPassword,
       this.name,
       this.cpf,
-      this.sex,
+      this.gender,
       this.birthDate});
   @override
   Map<String, dynamic> toJson() {
@@ -36,7 +36,7 @@ class SignUpRequestModel implements RequestModel {
       'cpf': cpf,
       'email': email,
       'password': password,
-      'sex': sex,
+      'gender': gender,
       'birthDate': birthDate!.toUtc().toString()
     };
 

@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   SignUpRequestModel requestModel = SignUpRequestModel();
 
-  List<DropdownMenuItem<String>> sexItems = [
+  List<DropdownMenuItem<String>> genderItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
     const DropdownMenuItem(child: Text("Feminino"), value: "F"),
     const DropdownMenuItem(child: Text("Prefiro não dizer"), value: "P"),
@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void handleOnChangeSex(String? selectedValue) {
     if (selectedValue != null) {
-      requestModel.sex = selectedValue;
+      requestModel.gender = selectedValue;
     }
   }
 
@@ -247,7 +247,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: kInputText,
                         //value: 'USA',
                         onChanged: handleOnChangeSex,
-                        items: sexItems),
+                        items: genderItems),
                     Container(
                       padding: const EdgeInsets.only(top: 4),
                       height: size.height * 0.075,
