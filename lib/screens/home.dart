@@ -28,20 +28,21 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SimpleSnappingSheet(
-          controller: snappingSheetController,
-          widgetBackground: Stack(
-            children: [
-              GoogleSimpleMap(),
-              SafeArea(
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: SearchBar(
-                    handleOnTap: _handleOnTapSearhBar,
-                  ),
+        controller: snappingSheetController,
+        widgetBackground: Stack(
+          children: [
+            GoogleSimpleMap(),
+            SafeArea(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: SearchBar(
+                  handleOnTap: _handleOnTapSearhBar,
                 ),
-              )
-            ],
-          )),
+              ),
+            ),
+          ],
+        ),
+      ),
       drawer: const DrawerMenu(),
     );
   }

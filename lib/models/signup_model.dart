@@ -1,4 +1,4 @@
-import 'package:brota_ai_app/models/request_model.dart';
+import 'base/request_model.dart';
 
 class SignUpResponseModel {
   final String token;
@@ -29,6 +29,7 @@ class SignUpRequestModel implements RequestModel {
       this.cpf,
       this.gender,
       this.birthDate});
+
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {

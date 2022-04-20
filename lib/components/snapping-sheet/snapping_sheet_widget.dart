@@ -2,13 +2,15 @@ import 'package:brota_ai_app/components/event_card.dart';
 import 'package:brota_ai_app/components/snapping-sheet/grabbing_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import '../../models/event_card_model.dart';
+import '../../services/api_service.dart';
+import 'package:intl/intl.dart';
 
-class SimpleSnappingSheet extends StatelessWidget {
-  SimpleSnappingSheet(
-      {Key? key, required Widget this.widgetBackground, this.controller})
+class SimpleSnappingSheet extends StatefulWidget {
+  const SimpleSnappingSheet(
+      {Key? key, required this.widgetBackground, this.controller})
       : super(key: key);
 
-  final ScrollController listViewController = ScrollController();
   final Widget widgetBackground;
   final SnappingSheetController? controller;
 
@@ -33,13 +35,27 @@ class SimpleSnappingSheet extends StatelessWidget {
   ];
 
   @override
+  State<SimpleSnappingSheet> createState() => _SimpleSnappingSheetState();
+}
+
+class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
+  final ScrollController listViewController = ScrollController();
+  late List<EventCardResponseModel> _eventCards = List.empty();
+
+  @override
+  void initState() {
+    _getEventCardList().then((value) => _eventCards = value);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SnappingSheet(
-      controller: controller,
-      child: widgetBackground,
+      controller: widget.controller,
+      child: widget.widgetBackground,
       lockOverflowDrag: true,
-      snappingPositions: positions,
-      initialSnappingPosition: positions[1],
+      snappingPositions: SimpleSnappingSheet.positions,
+      initialSnappingPosition: SimpleSnappingSheet.positions[1],
       grabbing: const GrabbingWidget(),
       grabbingHeight: 65,
       sheetAbove: SnappingSheetContent(
@@ -64,34 +80,37 @@ class SimpleSnappingSheet extends StatelessWidget {
             controller: listViewController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
+              children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(28, 8, 0, 2),
-                  child: Text(
+                  margin: const EdgeInsets.fromLTRB(28, 8, 0, 2),
+                  child: const Text(
                     'Eventos próximos',
                     style: TextStyle(
                       fontSize: 24,
                       fontFamily: 'ABeeZee',
                     ),
-                  
                     textAlign: TextAlign.left,
                   ),
                 ),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
-                EventCard(),
+                Column(
+                  children: _eventCards
+                      .map<EventCard>((e) => EventCard(
+                          name: e.name!,
+                          dateTime: DateFormat('dd/MM - HH:mm')
+                              .format(e.initialDateTime!),
+                          sport: e.sport!))
+                      .toList(),
+                ),
               ],
             ),
-          ) ,
+          ),
         ),
       ),
     );
+  }
+
+  Future<List<EventCardResponseModel>> _getEventCardList() async {
+    final api = APIService();
+    return api.getAllEvents();
   }
 }

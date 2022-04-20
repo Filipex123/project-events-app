@@ -1,4 +1,4 @@
-import 'package:brota_ai_app/models/request_model.dart';
+import 'base/request_model.dart';
 
 class LoginResponseModel {
   final String token;

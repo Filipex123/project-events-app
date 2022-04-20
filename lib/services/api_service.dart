@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/models/event_card_model.dart';
 import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/models/login_model.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
@@ -6,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.0.55:3333/api";
+  static const String baseUrl = "http://192.168.248.216:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -77,6 +78,27 @@ class APIService {
 
     if (response.statusCode == 201) {
       return responseMaped;
+    }
+
+    throw responseMaped;
+  }
+
+  Future<List<EventCardResponseModel>> getAllEvents() async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    final response =
+        await http.get(getRequestUrl('events'), headers: headerWithToken);
+
+    final List<dynamic> responseMaped = json.decode(response.body);
+
+    final eventCardList = responseMaped
+        .map((json) => EventCardResponseModel.fromJson(json))
+        .toList();
+
+    if (response.statusCode == 200) {
+      return eventCardList;
     }
 
     throw responseMaped;

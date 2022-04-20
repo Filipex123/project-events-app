@@ -76,7 +76,7 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
                     DateTimeField.combine(pickedDate, pickedTime);
 
                 String formattedDate =
-                    DateFormat('dd/MM/yyyy HH:mm').format(dateTime);
+                    DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
 
                 setState(() {
                   widget.dateTimeController.text = formattedDate;

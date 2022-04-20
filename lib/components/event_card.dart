@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
 class EventCard extends StatelessWidget {
-  const EventCard({
-    Key? key,
-  }) : super(key: key);
+  final String name;
+  final String dateTime;
+  final String sport;
+
+  const EventCard(
+      {Key? key,
+      required this.name,
+      required this.dateTime,
+      required this.sport})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +24,9 @@ class EventCard extends StatelessWidget {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Nome do Evento',
-                        style: TextStyle(
+                  children: <Widget>[
+                    Text(name,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'ABeeZee',
                         ))
@@ -27,9 +34,9 @@ class EventCard extends StatelessWidget {
                 ),
               ),
               Column(
-                children: [
-                  const Text('12:30',
-                      style: TextStyle(
+                children: <Widget>[
+                  Text(dateTime,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'ABeeZee',
                       ))
@@ -40,7 +47,7 @@ class EventCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Esporte do evento',
+                sport,
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'ABeeZee',
