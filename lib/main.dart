@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/my_events_screen.dart';
@@ -7,8 +8,10 @@ import 'package:brota_ai_app/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 
 void main() {
+  GetIt.I.registerSingleton<UsersModel>(UsersModel());
   runApp(const MyApp());
 }
 

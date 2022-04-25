@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/background.dart';
@@ -54,7 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     apiService.login(requestModel).then((response) {
       TokenStorageService.store(response.token);
-
+      apiService.getLogged(UsersModel.fromLoginRequestModel(requestModel));     
+   
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
       showDialog(

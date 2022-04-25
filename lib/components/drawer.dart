@@ -1,9 +1,11 @@
 import 'package:brota_ai_app/components/confirm_modal.dart';
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/my_events_screen.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class DrawerMenu extends StatelessWidget {
   const DrawerMenu({
@@ -28,6 +30,13 @@ class DrawerMenu extends StatelessWidget {
                 _logout(context);
               },
             ));
+  }
+  
+  String getImageProfile(){
+    String name = GetIt.I<UsersModel>().name ?? "";   
+    String firstName = name.split(' ')[0];
+    String secondName = name.split(' ')[1];  
+    return ('${firstName[0]}${secondName[0]}');
   }
 
   @override
@@ -54,17 +63,13 @@ class DrawerMenu extends StatelessWidget {
                       height: 90,
                       margin: const EdgeInsets.only(top: 0),
                       alignment: Alignment.centerLeft,
-                      child: Image.asset(
-                        'assets/images/perfil.png',
-                        height: 100,
-                        width: 100,
-                      ),
+                      child: SizedBox(height: 100, width: 100, child:  CircleAvatar(child: Text(getImageProfile()))),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10, top: 20),
+                     Padding(
+                      padding: const EdgeInsets.only(left: 10, top: 20),
                       child: Text(
-                        'Usuário Logado',
-                        style: TextStyle(
+                      GetIt.I<UsersModel>().name ??  'Usuário Logado',
+                        style: const TextStyle(
                           fontStyle: FontStyle.normal,
                           fontFamily: 'ABeeZee',
                           fontWeight: FontWeight.w500,

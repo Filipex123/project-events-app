@@ -1,13 +1,17 @@
+import 'dart:developer';
+
 import 'package:brota_ai_app/models/event_card_model.dart';
 import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/models/login_model.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class APIService {
-  static const String baseUrl = "http://192.168.0.55:3333";
+class APIService {  
+  static const String baseUrl = "http://192.168.100.109:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -41,6 +45,26 @@ class APIService {
         SignUpResponseModel.fromJson(json.decode(response.body));
 
     if (response.statusCode == 201) {
+      return responseMaped;
+    }
+
+    throw responseMaped;
+  }
+
+  Future<UsersModel> getLogged(UsersModel formattedUser) async {
+    final body = requestHeaders;
+    final tokenString = await TokenStorageService.read();
+    body['Authorization'] = 'Bearer $tokenString';
+    body.addAll(formattedUser.toJson());
+    log(body.toString());
+
+    final response =
+        await http.get(getRequestUrl('usersLogged'), headers: (body));
+    log(response.body);
+    UsersModel responseMaped = UsersModel.fromJson(json.decode(response.body));
+
+    if (response.statusCode == 201) {
+      GetIt.I<UsersModel>().name = responseMaped.name;
       return responseMaped;
     }
 
