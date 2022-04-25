@@ -7,7 +7,7 @@ import '../../services/api_service.dart';
 import 'package:intl/intl.dart';
 
 class SimpleSnappingSheet extends StatefulWidget {
-  const SimpleSnappingSheet(
+  SimpleSnappingSheet(
       {Key? key, required this.widgetBackground, this.controller})
       : super(key: key);
 
@@ -41,16 +41,37 @@ class SimpleSnappingSheet extends StatefulWidget {
 class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
   final ScrollController listViewController = ScrollController();
   late List<EventCardResponseModel> _eventCards = List.empty();
+  // final Stream<int> _eventsStream = (() {
+  //   late final StreamController<int> controller;
+  //   controller = StreamController<int>(
+  //     onListen: () async {
+  //       await Future<void>.delayed(const Duration(seconds: 1));
+  //       controller.add(1);
+  //       await Future<void>.delayed(const Duration(seconds: 1));
+  //       await controller.close();
+  //     },
+  //   );
+  //   return controller.stream;
+  // })();
 
   @override
   void initState() {
-    _getEventCardList().then((value) => _eventCards = value);
     super.initState();
+    _getEventCardList();
+  }
+
+  void _getEventCardList() async {
+    final api = APIService();
+    setState(() {
+      api.getAllEvents().then((value) => {_eventCards = value});
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SnappingSheet(
+      onSnapCompleted: (positionData, snappingPosition) =>
+          {_getEventCardList()},
       controller: widget.controller,
       child: widget.widgetBackground,
       lockOverflowDrag: true,
@@ -92,14 +113,34 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
                     textAlign: TextAlign.left,
                   ),
                 ),
-                Column(
-                  children: _eventCards
-                      .map<EventCard>((e) => EventCard(
-                          name: e.name!,
-                          dateTime: DateFormat('dd/MM - HH:mm')
-                              .format(e.initialDateTime!),
-                          sport: e.sport!))
-                      .toList(),
+                FutureBuilder(
+                  future: APIService().getAllEvents(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Container(
+                        padding: const EdgeInsets.only(top: 30),
+                        alignment: Alignment.center,
+                        child: const SizedBox(
+                          height: 50.0,
+                          width: 50.0,
+                          child: CircularProgressIndicator(
+                            value: null,
+                            strokeWidth: 7.0,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: _eventCards
+                            .map<EventCard>((e) => EventCard(
+                                name: e.name!,
+                                dateTime: DateFormat('dd/MM - HH:mm')
+                                    .format(e.initialDateTime!),
+                                sport: e.sport!))
+                            .toList(),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
@@ -107,10 +148,5 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
         ),
       ),
     );
-  }
-
-  Future<List<EventCardResponseModel>> _getEventCardList() async {
-    final api = APIService();
-    return api.getAllEvents();
   }
 }

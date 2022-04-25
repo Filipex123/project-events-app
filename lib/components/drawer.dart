@@ -1,5 +1,6 @@
 import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/screens/login.dart';
+import 'package:brota_ai_app/screens/my_events_screen.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
@@ -74,14 +75,6 @@ class DrawerMenu extends StatelessWidget {
                     )
                   ],
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.fromLTRB(90, 0, 0, 20),
-                //   child: Image.asset(
-                //     'assets/images/lateralDrawer.png',
-                //     height: 140,
-                //     width: 50,
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -114,7 +107,7 @@ class DrawerMenu extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, MyEventsScreen.id);
             },
           ),
           ListTile(

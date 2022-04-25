@@ -1,5 +1,6 @@
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
+import 'package:brota_ai_app/screens/my_events_screen.dart';
 import 'package:brota_ai_app/screens/my_splash_screen.dart';
 import 'package:brota_ai_app/screens/new_event.dart';
 import 'package:brota_ai_app/screens/signup.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         SignUpScreen.id: (context) => const SignUpScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         NewEventScreen.id: (context) => const NewEventScreen(),
+        MyEventsScreen.id: (context) => const MyEventsScreen(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

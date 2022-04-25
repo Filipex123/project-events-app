@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.248.216:3333";
+  static const String baseUrl = "http://192.168.0.55:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -90,6 +90,27 @@ class APIService {
 
     final response =
         await http.get(getRequestUrl('events'), headers: headerWithToken);
+
+    final List<dynamic> responseMaped = json.decode(response.body);
+
+    final eventCardList = responseMaped
+        .map((json) => EventCardResponseModel.fromJson(json))
+        .toList();
+
+    if (response.statusCode == 200) {
+      return eventCardList;
+    }
+
+    throw responseMaped;
+  }
+
+  Future<List<EventCardResponseModel>> getAllEventsByOwner() async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    final response = await http.get(getRequestUrl('events/owner/'),
+        headers: headerWithToken);
 
     final List<dynamic> responseMaped = json.decode(response.body);
 
