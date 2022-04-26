@@ -14,9 +14,9 @@ class NewEventValidation extends Validation {
       returnErrors.add('Campo esporte vazio');
     }
 
-    if (!requiredField(input.locale)) {
-      returnErrors.add('Campo localização vazio');
-    }
+    // if (!requiredField(input.locale)) {
+    //   returnErrors.add('Campo localização vazio');
+    // }
 
     if (!requiredField(input.gender)) {
       returnErrors.add('Campo de gênero vazio');

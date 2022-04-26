@@ -1,14 +1,18 @@
 import 'dart:developer';
 
+import 'package:brota_ai_app/components/address_search.dart';
 import 'package:brota_ai_app/components/date_time_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
+import 'package:brota_ai_app/services/google_place_service.dart';
+import 'package:brota_ai_app/utils/globals.dart';
 import 'package:brota_ai_app/utils/validations/new_event_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 
 class NewEventScreen extends StatefulWidget {
   static const String id = 'new_event_screen';
@@ -24,12 +28,12 @@ class _NewEventScreenState extends State<NewEventScreen> {
   TextEditingController maxAgeController = TextEditingController();
   TextEditingController localeController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController sportController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController eventDateController = TextEditingController();
   TextEditingController eventTimeController = TextEditingController();
 
   EventRequestModel requestModel = EventRequestModel();
+  GooglePlaceService googlePlace = GooglePlaceService();
 
   List<DropdownMenuItem<String>> genderItems = [
     const DropdownMenuItem(child: Text("Masculino"), value: "M"),
@@ -42,17 +46,14 @@ class _NewEventScreenState extends State<NewEventScreen> {
     super.initState();
 
     nameController.addListener(handleOnChangeName);
-    sportController.addListener(handleOnChangeSport);
     minAgeController.addListener(handleOnChangeMinAge);
     maxAgeController.addListener(handleOnChangeMaxAge);
-    localeController.addListener(handleOnChangeLocale);
     descriptionController.addListener(handleOnChangeDescription);
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    sportController.dispose();
     minAgeController.dispose();
     maxAgeController.dispose();
     localeController.dispose();
@@ -61,12 +62,22 @@ class _NewEventScreenState extends State<NewEventScreen> {
     super.dispose();
   }
 
+  List<DropdownMenuItem<String>> _getDropdownSportsItems() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    for(var i = 0; i < sportList.length; i++){
+      dropdownItems.add(DropdownMenuItem(child: Text(sportList[i]["name"]), value: sportList[i]["id"] as String));
+    }
+    return dropdownItems;
+  }
+
   void handleOnChangeName() {
     requestModel.name = nameController.text;
   }
 
-  void handleOnChangeSport() {
-    requestModel.sport = sportController.text;
+  void handleOnChangeSport(String? selectedValue) {
+    if (selectedValue != null) {
+      requestModel.sport = selectedValue;
+    }
   }
 
   void handleOnChangeMinAge() {
@@ -77,8 +88,20 @@ class _NewEventScreenState extends State<NewEventScreen> {
     requestModel.maxAge = maxAgeController.text;
   }
 
-  void handleOnChangeLocale() {
-    requestModel.locale = localeController.text;
+  void handleOnTapLocale() async {
+    final result = await showSearch(
+      context: context,
+      delegate: AddressSearch(),
+    );
+    if (result != null) {
+      localeController.text = result.name ?? '';
+      requestModel.locale = {
+        'name': result.name,
+        'id': result.placeId,
+        'lat': result.geometry?.location?.lat,
+        'lng': result.geometry?.location?.lng
+      };
+    }
   }
 
   void handleOnChangeDescription() {
@@ -192,13 +215,36 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       inputType: TextInputType.text,
                       inputAction: TextInputAction.next,
                     ),
-                    TextInputField(
-                      controller: sportController,
-                      icon: FontAwesomeIcons.basketballBall,
-                      hint: 'Esporte',
-                      maxLength: 11,
-                      inputType: TextInputType.text,
-                      inputAction: TextInputAction.next,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: DropdownButtonFormField(
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Color(0xFFD6822C), width: 2.0),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20.0),
+                                child: Icon(
+                                  FontAwesomeIcons.genderless,
+                                  size: 28,
+                                  color: Colors.black.withOpacity(0.3),
+                                ),
+                              ),
+                              hintText: 'Esporte',
+                              hintStyle: kHintInputText,
+                              filled: true,
+                              fillColor: Colors.white,
+                              counterText: ''),
+                          style: kInputText,
+                          //value: 'USA',
+                          onChanged: handleOnChangeSport,
+                          items: _getDropdownSportsItems()),
                     ),
                     TextInputField(
                       controller: descriptionController,
@@ -212,9 +258,8 @@ class _NewEventScreenState extends State<NewEventScreen> {
                       controller: localeController,
                       icon: FontAwesomeIcons.mapSigns,
                       hint: 'Localização',
-                      maxLength: 30,
-                      inputType: TextInputType.text,
-                      inputAction: TextInputAction.next,
+                      readOnly: true,
+                      handleOnTap: handleOnTapLocale,
                     ),
                     Row(
                       children: [

@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
@@ -26,14 +27,15 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
 
   Future _verifyLoggedUser() async {
-    APIService apiService = APIService();
     String? token = await TokenStorageService.read();
 
     if (token == null) {
       Timer(const Duration(seconds: 3), _redirectToLogin);
     } else {
-      apiService.validToken(token).then((response) {
-        apiService.getLogged();
+      APIService apiService = APIService();
+      apiService.validToken(token).then((response) async {
+        await apiService.getLogged();
+        await apiService.getAllSports();
         Navigator.pushReplacementNamed(context, HomeScreen.id);
       }).catchError((error) async {
         TokenStorageService.clear();

@@ -81,7 +81,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
   }
 
   void handleOnChangeLocale() {
-    requestModel.locale = localeController.text;
+    //requestModel.locale = localeController.text;
   }
 
   void handleOnChangeDescription() {

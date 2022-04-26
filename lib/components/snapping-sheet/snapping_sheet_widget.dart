@@ -51,7 +51,7 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
   void _getEventCardList() async {
     final api = APIService();
     setState(() {
-      api.getAllEvents().then((value) => {_eventCards = value});
+      //api.getAllEvents().then((value) => {_eventCards = value});
     });
   }
 

@@ -50,15 +50,16 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void handleOnClickLoginButton() async {
-    log(requestModel.toJson().toString());
     APIService apiService = APIService();
 
-    apiService.login(requestModel).then((response) {
-      TokenStorageService.store(response.token);
-      apiService.getLogged();
-
+    apiService.login(requestModel).then((response) async {
+      await TokenStorageService.store(response.token);
+      
+      await apiService.getLogged();
+      await apiService.getAllSports();
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
+      log(error);
       showDialog(
           barrierDismissible: false,
           context: context,

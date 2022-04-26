@@ -17,7 +17,7 @@ class EventRequestModel implements RequestModel {
   String? sport;
   String? minAge;
   String? maxAge;
-  String? locale;
+  Map<String, dynamic>? locale;
   String? description;
   String? gender;
   String? initialDateTime;
@@ -59,7 +59,7 @@ class EventRequestModel implements RequestModel {
         ", " +
         (maxAge ?? "") +
         ", " +
-        locale! +
+        locale!.toString() +
         ", " +
         description! +
         ", " +
