@@ -2,6 +2,7 @@ import 'package:brota_ai_app/components/drawer.dart';
 import 'package:brota_ai_app/components/google-map.dart';
 import 'package:brota_ai_app/components/home_search_bar.dart';
 import 'package:brota_ai_app/components/snapping-sheet/snapping_sheet_widget.dart';
+import 'package:brota_ai_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 

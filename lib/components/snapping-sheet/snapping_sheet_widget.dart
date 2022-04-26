@@ -40,7 +40,7 @@ class SimpleSnappingSheet extends StatefulWidget {
 
 class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
   final ScrollController listViewController = ScrollController();
-  late List<EventCardResponseModel> _eventCards = List.empty();
+  late List<EventResponseCardModel> _eventCards = List.empty();
 
   @override
   void initState() {

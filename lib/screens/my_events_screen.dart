@@ -22,7 +22,7 @@ class MyEventsScreen extends StatefulWidget {
 }
 
 class _MyEventsScreenState extends State<MyEventsScreen> {
-  Future<List<EventCardResponseModel>> _eventsFuture =
+  Future<List<EventResponseCardModel>> _eventsFuture =
       APIService().getAllEventsByOwner();
 
   void _updateScreen() {
@@ -36,24 +36,47 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.check_box_sharp),
-                text: 'Inscritos',
-              ),
-              Tab(
-                icon: Icon(FontAwesomeIcons.addressBook),
-                text: 'Criados',
-              ),
-            ],
-          ),
-          title: const Text(
-            'Meus eventos',
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: 'ABeeZee',
+        resizeToAvoidBottomInset: false,
+        backgroundColor: const Color(0xFF198754),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(100.0),
+          child: AppBar(
+            toolbarHeight: 200.0,
+            titleSpacing: 0,
+            backgroundColor: const Color(0xFF125C3A),
+            bottom: const TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.check_box_sharp),
+                  text: 'Inscritos',
+                ),
+                Tab(
+                  icon: Icon(FontAwesomeIcons.addressBook),
+                  text: 'Criados',
+                ),
+              ],
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Meus eventos',
+                    style: TextStyle(
+                        fontStyle: FontStyle.normal,
+                        fontFamily: 'ABeeZee',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 30,
+                        color: Colors.white),
+                  ),
+                ),
+                Image.asset(
+                  "assets/images/laterallogo.png",
+                  height: 130,
+                  width: 130,
+                ),
+              ],
             ),
           ),
         ),
@@ -85,8 +108,13 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                       children: snapshot.data
                           .map<MyEventCard>(
                             (e) => MyEventCard(
-                              id: e.id!,
+                              id: e.id,
                               name: e.name!,
+                              minAge:
+                                  (e.minAge != null) ? e.minAge.toString() : "",
+                              maxAge:
+                                  (e.maxAge != null) ? e.maxAge.toString() : "",
+                              gender: e.gender ?? "P",
                               dateTime: DateFormat('dd/MM - HH:mm')
                                   .format(e.initialDateTime!),
                               sport: e.sport!,
@@ -107,6 +135,6 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
     );
   }
 
-  Future<List<EventCardResponseModel>> getFutureEvents() =>
+  Future<List<EventResponseCardModel>> getFutureEvents() =>
       APIService().getAllEventsByOwner();
 }

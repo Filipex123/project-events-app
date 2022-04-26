@@ -31,12 +31,19 @@ class DrawerMenu extends StatelessWidget {
               },
             ));
   }
-  
-  String getImageProfile(){
-    String name = GetIt.I<UsersModel>().name ?? "";   
-    String firstName = name.split(' ')[0];
-    String secondName = name.split(' ')[1];  
-    return ('${firstName[0]}${secondName[0]}');
+
+  String getImageProfile() {
+    String name = GetIt.I<UsersModel>().name ?? "";
+
+    var nameArray = name.split(' ');
+
+    if (nameArray.length > 2) {
+      String firstName = nameArray[0] ?? " ";
+      String secondName = nameArray[1] ?? " ";
+      return ('${firstName[0]}${secondName[0]}');
+    }
+
+    return "";
   }
 
   @override
@@ -63,12 +70,20 @@ class DrawerMenu extends StatelessWidget {
                       height: 90,
                       margin: const EdgeInsets.only(top: 0),
                       alignment: Alignment.centerLeft,
-                      child: SizedBox(height: 100, width: 100, child:  CircleAvatar(child: Text(getImageProfile()))),
+                      child: SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: CircleAvatar(
+                          child: Text(
+                            getImageProfile(),
+                          ),
+                        ),
+                      ),
                     ),
-                     Padding(
+                    Padding(
                       padding: const EdgeInsets.only(left: 10, top: 20),
                       child: Text(
-                      GetIt.I<UsersModel>().name ??  'Usuário Logado',
+                        GetIt.I<UsersModel>().name ?? 'Usuário Logado',
                         style: const TextStyle(
                           fontStyle: FontStyle.normal,
                           fontFamily: 'ABeeZee',
@@ -77,7 +92,7 @@ class DrawerMenu extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

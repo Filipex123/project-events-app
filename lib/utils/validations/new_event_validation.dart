@@ -18,12 +18,12 @@ class NewEventValidation extends Validation {
       returnErrors.add('Campo localização vazio');
     }
 
-    // if(!requiredFieldDate(input.initialDateTime)){
-    //   returnErrors.add('Campo de data e hora vazio');
-    // }
-
     if (!requiredField(input.gender)) {
       returnErrors.add('Campo de gênero vazio');
+    }
+
+    if (int.parse(input.minAge!) > int.parse(input.maxAge!)) {
+      returnErrors.add('Idade mínima deve ser menor que a máxima');
     }
 
     return returnErrors.map((item) => '- ' + item).toList();

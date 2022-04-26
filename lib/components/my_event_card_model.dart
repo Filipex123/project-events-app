@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/components/edit_event_modal.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -6,14 +7,20 @@ class MyEventCard extends StatefulWidget {
   final String id;
   final String name;
   final String dateTime;
+  final String? minAge;
+  final String? maxAge;
   final String sport;
   final String locale;
   final String description;
+  final String? gender;
   final Function? updateFunction;
 
   const MyEventCard({
     Key? key,
     required this.id,
+    this.minAge,
+    this.maxAge,
+    this.gender,
     required this.name,
     required this.dateTime,
     required this.sport,
@@ -27,6 +34,11 @@ class MyEventCard extends StatefulWidget {
 }
 
 class _MyEventCardState extends State<MyEventCard> {
+  void _updateScreen() {
+    setState(() {});
+    widget.updateFunction!();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -108,7 +120,48 @@ class _MyEventCardState extends State<MyEventCard> {
                       color: Color(0xFF198754),
                     ),
                     onTap: () {
-                      print('Ir para a tela de edição de evento');
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white.withOpacity(0.6),
+                            titlePadding: const EdgeInsets.all(0),
+                            contentPadding: const EdgeInsets.all(0),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            title: Container(
+                              color: const Color(0xFF198754),
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.all(0),
+                              margin: const EdgeInsets.all(0),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "Editando evento",
+                                style: TextStyle(
+                                  fontStyle: FontStyle.normal,
+                                  fontFamily: 'ABeeZee',
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 30,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            content: EditEventModal(
+                              id: widget.id,
+                              name: widget.name,
+                              dateTime: widget.dateTime,
+                              minAge: widget.minAge,
+                              maxAge: widget.maxAge,
+                              sport: widget.sport,
+                              locale: widget.locale,
+                              description: widget.description,
+                              gender: widget.gender,
+                              updateFunction: _updateScreen,
+                            ),
+                          );
+                        },
+                      );
                     },
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:brota_ai_app/models/user_model.dart';
+import 'package:brota_ai_app/screens/edit_event_screen.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/screens/my_events_screen.dart';
