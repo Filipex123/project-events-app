@@ -1,3 +1,4 @@
+import 'package:brota_ai_app/components/confirm_modal.dart';
 import 'package:brota_ai_app/components/edit_event_modal.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
@@ -175,9 +176,21 @@ class _MyEventCardState extends State<MyEventCard> {
                       color: Color(0xFF198754),
                     ),
                     onTap: () {
-                      APIService().deleteEvent(widget.id);
-                      setState(() {});
-                      widget.updateFunction!();
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) => ConfirmModal(
+                                modalTitle: "Excluir",
+                                message:
+                                    "Deseja realmente excluir este evento?",
+                                cancelButtonText: 'CANCELAR',
+                                confirmButtonText: 'EXCLUIR',
+                                confirmCallback: () {
+                                  APIService().deleteEvent(widget.id);
+                                  setState(() {});
+                                  widget.updateFunction!();
+                                },
+                              ));
                     },
                   ),
                 ),
