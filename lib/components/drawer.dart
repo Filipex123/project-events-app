@@ -37,13 +37,9 @@ class DrawerMenu extends StatelessWidget {
 
     var nameArray = name.split(' ');
 
-    if (nameArray.length > 2) {
-      String firstName = nameArray[0] ?? " ";
-      String secondName = nameArray[1] ?? " ";
-      return ('${firstName[0]}${secondName[0]}');
-    }
-
-    return "";
+    String firstName = nameArray[0] ?? " ";
+    String secondName = nameArray[1] ?? " ";
+    return ('${firstName[0]}${secondName[0]}');
   }
 
   @override
@@ -133,7 +129,7 @@ class DrawerMenu extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.settings),
             title: const Text(
-              'Editar Evento',
+              'Configurações',
               style: TextStyle(
                 fontStyle: FontStyle.normal,
                 fontFamily: 'ABeeZee',

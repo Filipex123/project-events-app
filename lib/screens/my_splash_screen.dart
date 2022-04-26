@@ -33,6 +33,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
       Timer(const Duration(seconds: 3), _redirectToLogin);
     } else {
       apiService.validToken(token).then((response) {
+        apiService.getLogged();
         Navigator.pushReplacementNamed(context, HomeScreen.id);
       }).catchError((error) async {
         TokenStorageService.clear();

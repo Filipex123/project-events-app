@@ -55,8 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     apiService.login(requestModel).then((response) {
       TokenStorageService.store(response.token);
-      apiService.getLogged(UsersModel.fromLoginRequestModel(requestModel));     
-   
+      apiService.getLogged();
+
       Navigator.pushReplacementNamed(context, HomeScreen.id);
     }).catchError((error) {
       showDialog(

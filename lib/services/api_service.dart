@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:brota_ai_app/models/event_card_model.dart';
 import 'package:brota_ai_app/models/event_model.dart';
 import 'package:brota_ai_app/models/login_model.dart';
@@ -12,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.0.55:3333";
+  static const String baseUrl = "http://192.168.248.216:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -52,15 +50,15 @@ class APIService {
     throw responseMaped;
   }
 
-  Future<UsersModel> getLogged(UsersModel formattedUser) async {
-    final body = requestHeaders;
+  Future<UsersModel> getLogged() async {
+    final headerWithToken = requestHeaders;
     final tokenString = await TokenStorageService.read();
-    body['Authorization'] = 'Bearer $tokenString';
-    body.addAll(formattedUser.toJson());
-    log(body.toString());
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
 
-    final response =
-        await http.get(getRequestUrl('usersLogged'), headers: (body));
+    log(headerWithToken.toString());
+
+    final response = await http.get(getRequestUrl('usersLogged'),
+        headers: (headerWithToken));
     log(response.body);
     UsersModel responseMaped = UsersModel.fromJson(json.decode(response.body));
 
