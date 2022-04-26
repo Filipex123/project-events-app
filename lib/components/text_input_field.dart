@@ -14,7 +14,10 @@ class TextInputField extends StatelessWidget {
       this.handleOnChange,
       this.controller,
       this.hadWidth,
-      this.hadHeight})
+      this.hadHeight,
+      this.readOnly,
+      this.handleOnTap
+      })
       : super(key: key);
 
   final IconData? icon;
@@ -25,9 +28,11 @@ class TextInputField extends StatelessWidget {
   final int? maxLength;
   final bool? isPassword;
   final Function(String)? handleOnChange;
+  final Function()? handleOnTap;
   final TextEditingController? controller;
   final double? hadWidth;
   final double? hadHeight;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,9 @@ class TextInputField extends StatelessWidget {
             style: kInputText,
             keyboardType: inputType,
             textInputAction: inputAction,
+            readOnly: readOnly ?? false,
+            onTap: handleOnTap,
+            onChanged: handleOnChange,
           ),
         ),
       ),
