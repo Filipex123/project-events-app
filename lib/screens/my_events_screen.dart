@@ -13,7 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/event_card_model.dart';
 
 class MyEventsScreen extends StatefulWidget {
-  static const String id = '';
+  static const String id = 'myEventScreen';
 
   const MyEventsScreen({Key? key}) : super(key: key);
 
@@ -22,6 +22,15 @@ class MyEventsScreen extends StatefulWidget {
 }
 
 class _MyEventsScreenState extends State<MyEventsScreen> {
+  Future<List<EventCardResponseModel>> _eventsFuture =
+      APIService().getAllEventsByOwner();
+
+  void _updateScreen() {
+    setState(() {
+      _eventsFuture = APIService().getAllEventsByOwner();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -60,7 +69,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
             ),
             SingleChildScrollView(
               child: FutureBuilder(
-                future: APIService().getAllEventsByOwner(),
+                future: _eventsFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.data == null) {
                     return const SizedBox(
@@ -76,12 +85,14 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                       children: snapshot.data
                           .map<MyEventCard>(
                             (e) => MyEventCard(
+                              id: e.id!,
                               name: e.name!,
                               dateTime: DateFormat('dd/MM - HH:mm')
                                   .format(e.initialDateTime!),
                               sport: e.sport!,
                               description: e.description!,
                               locale: e.locale,
+                              updateFunction: _updateScreen,
                             ),
                           )
                           .toList(),
@@ -95,4 +106,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
       ),
     );
   }
+
+  Future<List<EventCardResponseModel>> getFutureEvents() =>
+      APIService().getAllEventsByOwner();
 }

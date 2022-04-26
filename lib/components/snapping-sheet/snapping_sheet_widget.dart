@@ -41,18 +41,6 @@ class SimpleSnappingSheet extends StatefulWidget {
 class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
   final ScrollController listViewController = ScrollController();
   late List<EventCardResponseModel> _eventCards = List.empty();
-  // final Stream<int> _eventsStream = (() {
-  //   late final StreamController<int> controller;
-  //   controller = StreamController<int>(
-  //     onListen: () async {
-  //       await Future<void>.delayed(const Duration(seconds: 1));
-  //       controller.add(1);
-  //       await Future<void>.delayed(const Duration(seconds: 1));
-  //       await controller.close();
-  //     },
-  //   );
-  //   return controller.stream;
-  // })();
 
   @override
   void initState() {

@@ -1,22 +1,32 @@
+import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class MyEventCard extends StatelessWidget {
+class MyEventCard extends StatefulWidget {
+  final String id;
   final String name;
   final String dateTime;
   final String sport;
   final String locale;
   final String description;
+  final Function? updateFunction;
 
   const MyEventCard({
     Key? key,
+    required this.id,
     required this.name,
     required this.dateTime,
     required this.sport,
     required this.locale,
     required this.description,
+    this.updateFunction,
   }) : super(key: key);
 
+  @override
+  State<MyEventCard> createState() => _MyEventCardState();
+}
+
+class _MyEventCardState extends State<MyEventCard> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -32,7 +42,7 @@ class MyEventCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        name,
+                        widget.name,
                         style: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'ABeeZee',
@@ -44,14 +54,14 @@ class MyEventCard extends StatelessWidget {
                 Column(
                   children: <Widget>[
                     Text(
-                      dateTime,
+                      widget.dateTime,
                       style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'ABeeZee',
                       ),
                     ),
                     Text(
-                      description,
+                      widget.description,
                       style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'ABeeZee',
@@ -64,7 +74,7 @@ class MyEventCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  sport,
+                  widget.sport,
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'ABeeZee',
@@ -77,7 +87,7 @@ class MyEventCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  locale,
+                  widget.locale,
                   style: const TextStyle(
                     fontSize: 20,
                     fontFamily: 'ABeeZee',
@@ -112,7 +122,9 @@ class MyEventCard extends StatelessWidget {
                       color: Color(0xFF198754),
                     ),
                     onTap: () {
-                      print('Ir para a tela de deleção de evento');
+                      APIService().deleteEvent(widget.id);
+                      setState(() {});
+                      widget.updateFunction!();
                     },
                   ),
                 ),

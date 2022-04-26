@@ -107,6 +107,14 @@ class APIService {
     throw responseMaped;
   }
 
+  void deleteEvent(String id) async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    await http.delete(getRequestUrl('events/$id'), headers: headerWithToken);
+  }
+
   Future<List<EventCardResponseModel>> getAllEvents() async {
     final tokenString = await TokenStorageService.read();
     final headerWithToken = requestHeaders;

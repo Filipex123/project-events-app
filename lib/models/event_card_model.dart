@@ -1,4 +1,5 @@
 class EventCardResponseModel {
+  String id;
   String? name;
   String? sport;
   int? minAge;
@@ -9,7 +10,8 @@ class EventCardResponseModel {
   DateTime? initialDateTime;
 
   EventCardResponseModel(
-      {this.minAge,
+      {required this.id,
+      this.minAge,
       this.maxAge,
       this.locale,
       this.description,
@@ -20,6 +22,7 @@ class EventCardResponseModel {
 
   factory EventCardResponseModel.fromJson(dynamic json) {
     return EventCardResponseModel(
+        id: json["id"],
         name: json["name"] ?? "",
         sport: json["sport"] ?? "",
         minAge: json["minAge"],
