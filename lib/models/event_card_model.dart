@@ -4,7 +4,7 @@ class EventResponseCardModel {
   String? sport;
   int? minAge;
   int? maxAge;
-  String? locale;
+  Map<String, dynamic>? locale;
   String? description;
   String? gender;
   DateTime? initialDateTime;

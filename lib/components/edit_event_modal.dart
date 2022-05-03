@@ -18,7 +18,7 @@ class EditEventModal extends StatefulWidget {
   final String? minAge;
   final String? maxAge;
   final String sport;
-  final String locale;
+  final Map<String, dynamic> locale;
   final String description;
   final String? gender;
   final Function? updateFunction;
@@ -72,7 +72,7 @@ class _EditEventModalState extends State<EditEventModal> {
     maxAgeController.addListener(handleOnChangeMaxAge);
     maxAgeController.text = widget.maxAge ?? "";
     localeController.addListener(handleOnChangeLocale);
-    localeController.text = widget.locale;
+    localeController.text = widget.locale['name'];
     descriptionController.addListener(handleOnChangeDescription);
     descriptionController.text = widget.description;
     eventDateController.text = widget.dateTime;

@@ -11,7 +11,7 @@ class MyEventCard extends StatefulWidget {
   final String? minAge;
   final String? maxAge;
   final String sport;
-  final String locale;
+  final Map<String, dynamic> locale;
   final String description;
   final String? gender;
   final Function? updateFunction;
@@ -100,7 +100,7 @@ class _MyEventCardState extends State<MyEventCard> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  widget.locale,
+                  widget.locale['name'],
                   style: const TextStyle(
                     fontSize: 20,
                     fontFamily: 'ABeeZee',
@@ -155,7 +155,7 @@ class _MyEventCardState extends State<MyEventCard> {
                               minAge: widget.minAge,
                               maxAge: widget.maxAge,
                               sport: widget.sport,
-                              locale: widget.locale,
+                              locale: widget.locale['name'],
                               description: widget.description,
                               gender: widget.gender,
                               updateFunction: _updateScreen,
