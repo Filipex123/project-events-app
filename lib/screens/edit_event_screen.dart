@@ -69,15 +69,15 @@ class _EditEventScreenState extends State<EditEventScreen> {
   }
 
   void handleOnChangeSport() {
-    requestModel.sport = sportController.text;
+    requestModel.sport!.id = sportController.text;
   }
 
   void handleOnChangeMinAge() {
-    requestModel.minAge = minAgeController.text;
+    requestModel.minAge = int.parse(minAgeController.text);
   }
 
   void handleOnChangeMaxAge() {
-    requestModel.maxAge = maxAgeController.text;
+    requestModel.maxAge = int.parse(maxAgeController.text);
   }
 
   void handleOnChangeLocale() {

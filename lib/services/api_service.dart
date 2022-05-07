@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.0.14:3332";
+  static const String baseUrl = "http://192.168.186.216:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -36,7 +36,8 @@ class APIService {
     throw responseMaped;
   }
 
-  Future<SignUpResponseModel> signUp(SignUpRequestModel signUpRequestModel) async {
+  Future<SignUpResponseModel> signUp(
+      SignUpRequestModel signUpRequestModel) async {
     final response = await http.post(getRequestUrl('users'),
         body: json.encode(signUpRequestModel.toJson()),
         headers: requestHeaders);
@@ -56,8 +57,9 @@ class APIService {
     final headerWithToken = requestHeaders;
     headerWithToken['Authorization'] = 'Bearer $tokenString';
 
-    final response = await http.get(getRequestUrl('usersLogged'), headers: headerWithToken);
-   
+    final response =
+        await http.get(getRequestUrl('usersLogged'), headers: headerWithToken);
+
     UsersModel responseMaped = UsersModel.fromJson(json.decode(response.body));
 
     if (response.statusCode == 201) {
@@ -171,7 +173,8 @@ class APIService {
     final headerWithToken = requestHeaders;
     headerWithToken['Authorization'] = 'Bearer $tokenString';
 
-    final response = await http.get(getRequestUrl('sports'), headers: headerWithToken);
+    final response =
+        await http.get(getRequestUrl('sports'), headers: headerWithToken);
 
     final List<dynamic> responseMaped = json.decode(response.body);
 

@@ -1,9 +1,5 @@
-import 'package:brota_ai_app/components/event_card.dart';
 import 'package:brota_ai_app/components/my_event_card_model.dart';
-import 'package:brota_ai_app/screens/home.dart';
-import 'package:brota_ai_app/screens/login.dart';
 import 'package:brota_ai_app/services/api_service.dart';
-import 'package:brota_ai_app/services/token_storage_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
@@ -117,7 +113,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                               gender: e.gender ?? "P",
                               dateTime: DateFormat('dd/MM - HH:mm')
                                   .format(e.initialDateTime!),
-                              sport: e.sport!,
+                              sport: e.sport!.name,
                               description: e.description!,
                               locale: e.locale,
                               updateFunction: _updateScreen,

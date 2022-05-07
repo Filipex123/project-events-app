@@ -51,7 +51,7 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
   void _getEventCardList() async {
     final api = APIService();
     setState(() {
-      //api.getAllEvents().then((value) => {_eventCards = value});
+      api.getAllEvents().then((value) => {_eventCards = value});
     });
   }
 
@@ -124,7 +124,7 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
                                 name: e.name!,
                                 dateTime: DateFormat('dd/MM - HH:mm')
                                     .format(e.initialDateTime!),
-                                sport: e.sport!))
+                                sport: e.sport!.name ?? ""))
                             .toList(),
                       );
                     }

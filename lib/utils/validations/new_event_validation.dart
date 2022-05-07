@@ -10,9 +10,9 @@ class NewEventValidation extends Validation {
       returnErrors.add('Campo nome do evento vazio');
     }
 
-    if (!requiredField(input.sport)) {
-      returnErrors.add('Campo esporte vazio');
-    }
+    // if (!requiredField(input.sport!.id)) {
+    //   returnErrors.add('Campo esporte vazio');
+    // }
 
     // if (!requiredField(input.locale)) {
     //   returnErrors.add('Campo localização vazio');

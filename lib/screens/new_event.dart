@@ -5,6 +5,7 @@ import 'package:brota_ai_app/components/date_time_input_field.dart';
 import 'package:brota_ai_app/components/paleta.dart';
 import 'package:brota_ai_app/components/simple_modal.dart';
 import 'package:brota_ai_app/models/event_model.dart';
+import 'package:brota_ai_app/models/sport_model.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:brota_ai_app/components/text_input_field.dart';
 import 'package:brota_ai_app/services/google_place_service.dart';
@@ -64,8 +65,10 @@ class _NewEventScreenState extends State<NewEventScreen> {
 
   List<DropdownMenuItem<String>> _getDropdownSportsItems() {
     List<DropdownMenuItem<String>> dropdownItems = [];
-    for(var i = 0; i < sportList.length; i++){
-      dropdownItems.add(DropdownMenuItem(child: Text(sportList[i]["name"]), value: sportList[i]["id"] as String));
+    for (var i = 0; i < sportList.length; i++) {
+      dropdownItems.add(DropdownMenuItem(
+          child: Text(sportList[i]["name"]),
+          value: sportList[i]["id"] as String));
     }
     return dropdownItems;
   }
@@ -75,17 +78,20 @@ class _NewEventScreenState extends State<NewEventScreen> {
   }
 
   void handleOnChangeSport(String? selectedValue) {
+    log("################# ESPORTE SELECIONADO = " + (selectedValue ?? ""));
     if (selectedValue != null) {
-      requestModel.sport = selectedValue;
+      var sport = SportModel();
+      sport.id = selectedValue;
+      requestModel.sport = sport;
     }
   }
 
   void handleOnChangeMinAge() {
-    requestModel.minAge = minAgeController.text;
+    requestModel.minAge = int.parse(minAgeController.text);
   }
 
   void handleOnChangeMaxAge() {
-    requestModel.maxAge = maxAgeController.text;
+    requestModel.maxAge = int.parse(maxAgeController.text);
   }
 
   void handleOnTapLocale() async {

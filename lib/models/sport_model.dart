@@ -6,25 +6,18 @@ class SportModel {
 class SportModelR {
   String? id;
   String? name;
-  
-  SportModelR({this.id, this.name});
 
-  // static SportModelR fromLoginRequestModel(unknow model) {
-  //   return SportModelR(email: model.email, password: model.password);
-  // }
+  SportModelR({this.id, this.name});
 
   factory SportModelR.fromJson(dynamic json) {
     return SportModelR(
-        name: json["name"] ?? "",
-        id: json["id"] ?? "",
+      name: json["name"] ?? "",
+      id: json["id"] ?? "",
     );
   }
 
   Map<String, String> toJson() {
-    Map<String, String> map = {
-      'id': id ?? "",
-      'name': name ?? ""
-    };
+    Map<String, String> map = {'id': id ?? "", 'name': name ?? ""};
 
     return map;
   }

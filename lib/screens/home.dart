@@ -39,32 +39,33 @@ class _HomeScreenState extends State<HomeScreen> {
       );
       snappingSheetController.snapToPosition(position);
     }
- 
-    var result = await googlePlace?.search.getFindPlace("Júlio Wilfredo", InputType.TextQuery);
-    var result3 = await googlePlace?.search.getTextSearch("Rua Júlio Wilfredo Castro Perez 325");
-    var result2 = await googlePlace?.autocomplete.get('Rua Júlio Wilfredo Castro Perez 325');
 
-    
-    result3?.results!.forEach((element) {
-      log(element.name ?? '');
-      log(element.geometry?.location?.lat.toString() ?? '');
-      log(element.geometry?.location?.lng.toString() ?? '');
-    },);
+    var result = await googlePlace?.search
+        .getFindPlace("Júlio Wilfredo", InputType.TextQuery);
+    var result3 = await googlePlace?.search
+        .getTextSearch("Rua Júlio Wilfredo Castro Perez 325");
+    var result2 = await googlePlace?.autocomplete
+        .get('Rua Júlio Wilfredo Castro Perez 325');
 
-    result?.candidates!.forEach((element) {
-      log(element.name ?? 'nada');
-    },);
+    result3?.results!.forEach(
+      (element) {
+        log(element.name ?? '');
+        log(element.geometry?.location?.lat.toString() ?? '');
+        log(element.geometry?.location?.lng.toString() ?? '');
+      },
+    );
 
-    result2?.predictions!.forEach((element) {
-      // element.description!.forEach((element) {
-      //   log(element.);
-      // });
-      log(element.description ?? '');
-      //log(element. ?? '');
-    },);
-   
-    //log(result?.results!.length.toString() ?? '');
-     
+    result?.candidates!.forEach(
+      (element) {
+        log(element.name ?? 'nada');
+      },
+    );
+
+    result2?.predictions!.forEach(
+      (element) {
+        log(element.description ?? '');
+      },
+    );
   }
 
   @override

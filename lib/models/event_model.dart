@@ -1,3 +1,5 @@
+import 'package:brota_ai_app/models/sport_model.dart';
+
 import 'base/request_model.dart';
 
 class EventResponseModel {
@@ -14,9 +16,9 @@ class EventResponseModel {
 
 class EventRequestModel implements RequestModel {
   String? name;
-  String? sport;
-  String? minAge;
-  String? maxAge;
+  SportModel? sport;
+  int? minAge;
+  int? maxAge;
   Map<String, dynamic>? locale;
   String? description;
   String? gender;
@@ -36,7 +38,7 @@ class EventRequestModel implements RequestModel {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       'name': name,
-      'sport': sport,
+      'sportId': sport!.id ?? "",
       'minAge': minAge,
       'maxAge': maxAge,
       'locale': locale,
@@ -53,11 +55,9 @@ class EventRequestModel implements RequestModel {
     return "{" +
         name! +
         ", " +
-        sport! +
+        sport!.toString() +
         ", " +
-        (minAge ?? "") +
-        ", " +
-        (maxAge ?? "") +
+        (maxAge.toString()) +
         ", " +
         locale!.toString() +
         ", " +

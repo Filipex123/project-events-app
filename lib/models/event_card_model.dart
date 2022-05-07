@@ -1,7 +1,9 @@
+import 'package:brota_ai_app/models/sport_model.dart';
+
 class EventResponseCardModel {
   String? id;
   String? name;
-  String? sport;
+  SportModelR? sport;
   int? minAge;
   int? maxAge;
   Map<String, dynamic>? locale;
@@ -24,7 +26,7 @@ class EventResponseCardModel {
     return EventResponseCardModel(
         id: json["id"] ?? "",
         name: json["name"] ?? "",
-        sport: json["sport"] ?? "",
+        sport: SportModelR.fromJson(json["sport"] ?? ""),
         minAge: json["minAge"],
         maxAge: json["maxAge"],
         locale: json["locale"] ?? "",
