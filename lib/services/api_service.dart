@@ -151,6 +151,27 @@ class APIService {
     throw responseMaped;
   }
 
+  Future<List<UsersModel>> getJoinedUsers(String eventId) async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    final response = await http.get(
+        getRequestUrl('events/$eventId/joinedUsers'),
+        headers: headerWithToken);
+
+    final List<dynamic> responseMaped = json.decode(response.body);
+
+    final usersList =
+        responseMaped.map((json) => UsersModel.fromJson(json["user"])).toList();
+
+    if (response.statusCode == 200) {
+      return usersList;
+    }
+
+    throw responseMaped;
+  }
+
   void deleteEvent(String id) async {
     final tokenString = await TokenStorageService.read();
     final headerWithToken = requestHeaders;

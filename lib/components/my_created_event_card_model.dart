@@ -4,8 +4,11 @@ import 'package:brota_ai_app/screens/event_list.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 
-class MyEventCard extends StatefulWidget {
+import '../models/user_model.dart';
+
+class MyCreatedEventCard extends StatefulWidget {
   final String id;
   final String name;
   final String dateTime;
@@ -16,13 +19,15 @@ class MyEventCard extends StatefulWidget {
   final String description;
   final String? gender;
   final Function? updateFunction;
+  final Function? handleOnTap;
 
-  const MyEventCard({
+  const MyCreatedEventCard({
     Key? key,
     required this.id,
     this.minAge,
     this.maxAge,
     this.gender,
+    this.handleOnTap,
     required this.name,
     required this.dateTime,
     required this.sport,
@@ -32,10 +37,10 @@ class MyEventCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<MyEventCard> createState() => _MyEventCardState();
+  State<MyCreatedEventCard> createState() => _MyCreatedEventCardState();
 }
 
-class _MyEventCardState extends State<MyEventCard> {
+class _MyCreatedEventCardState extends State<MyCreatedEventCard> {
   void _updateScreen() {
     setState(() {});
     widget.updateFunction!();
@@ -44,7 +49,10 @@ class _MyEventCardState extends State<MyEventCard> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, EventList.id),
+      onTap: (() => {
+            GetIt.I<UsersModel>().id = widget.id,
+            Navigator.pushNamed(context, EventList.id)
+          }),
       child: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.fromLTRB(24, 8, 24, 8),
@@ -208,7 +216,7 @@ class _MyEventCardState extends State<MyEventCard> {
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
                 blurRadius: 10,
-                offset: const Offset(3, 6), // Shadow position
+                offset: const Offset(3, 6),
               ),
             ],
           ),
