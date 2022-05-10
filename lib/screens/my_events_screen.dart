@@ -1,11 +1,10 @@
-import 'package:brota_ai_app/components/my_event_card_model.dart';
+import 'package:brota_ai_app/components/my_created_event_card_model.dart';
 import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import '../components/my_event_card_model copy.dart';
 import '../models/event_card_model.dart';
 
 class MyEventsScreen extends StatefulWidget {
@@ -136,8 +135,8 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
                   } else {
                     return Column(
                       children: snapshot.data
-                          .map<MyEventCard>(
-                            (e) => MyEventCard(
+                          .map<MyCreatedEventCard>(
+                            (e) => MyCreatedEventCard(
                               id: e.id,
                               name: e.name!,
                               minAge:
