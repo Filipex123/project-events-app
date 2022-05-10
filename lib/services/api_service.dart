@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.0.55:3333";
+  static const String baseUrl = "http://192.168.100.109:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -24,10 +24,9 @@ class APIService {
 
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     final response = await http.post(getRequestUrl('login'),
-        body: json.encode(loginRequestModel.toJson()), headers: requestHeaders);
-
-    LoginResponseModel responseMaped =
-        LoginResponseModel.fromJson(json.decode(response.body));
+      body: json.encode(loginRequestModel.toJson()), headers: requestHeaders);
+        LoginResponseModel responseMaped =
+          LoginResponseModel.fromJson(json.decode(response.body));
 
     if (response.statusCode == 201) {
       return responseMaped;

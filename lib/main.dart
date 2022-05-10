@@ -1,4 +1,6 @@
 import 'package:brota_ai_app/models/user_model.dart';
+import 'package:brota_ai_app/screens/edit_event_screen.dart';
+import 'package:brota_ai_app/screens/event_list.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/join_event_screen.dart';
 import 'package:brota_ai_app/screens/login.dart';
@@ -40,6 +42,7 @@ class MyApp extends StatelessWidget {
         NewEventScreen.id: (context) => const NewEventScreen(),
         MyEventsScreen.id: (context) => const MyEventsScreen(),
         JoinEventScreen.id: (context) => const JoinEventScreen(),
+        EventList.id:(context) => const EventList(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

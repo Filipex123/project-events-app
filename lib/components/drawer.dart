@@ -37,8 +37,8 @@ class DrawerMenu extends StatelessWidget {
 
     var nameArray = name.split(' ');
 
-    String firstName = nameArray[0] ?? " ";
-    String secondName = nameArray[1] ?? " ";
+    String firstName = nameArray[0];
+    String secondName = nameArray[1];
     return ('${firstName[0]}${secondName[0]}');
   }
 

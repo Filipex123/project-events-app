@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void handleOnClickLoginButton() async {
     APIService apiService = APIService();
 
-    apiService.login(requestModel).then((response) async {
+    apiService.login(requestModel).then((response) async {      
       await TokenStorageService.store(response.token);
       
       await apiService.getLogged();
