@@ -18,6 +18,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
@@ -56,6 +57,7 @@ class SearchBar extends StatelessWidget {
         color: Colors.black,
       ),
       onTap: handleOnTap,
+      readOnly: true,
     );
   }
 }
