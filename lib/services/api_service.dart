@@ -118,6 +118,20 @@ class APIService {
     return true;
   }
 
+  Future<bool> joinEvent(String eventId) async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    var response = await http.post(getRequestUrl('events/join/$eventId'),
+        headers: headerWithToken);
+
+    if (response.statusCode != 201) {
+      throw response;
+    }
+    return true;
+  }
+
   void deleteEvent(String id) async {
     final tokenString = await TokenStorageService.read();
     final headerWithToken = requestHeaders;
@@ -186,22 +200,5 @@ class APIService {
     }
 
     throw responseMaped;
-
-    // if (response.statusCode == 201) {
-    //   GetIt.I<UsersModel>().name = responseMaped.name;
-    //   return responseMaped;
-    // }
-
-    // final List<dynamic> responseMaped = json.decode(response.body);
-
-    // final eventCardList = responseMaped
-    //     .map((json) => EventCardResponseModel.fromJson(json))
-    //     .toList();
-
-    // if (response.statusCode == 200) {
-    //   return eventCardList;
-    // }
-
-    // throw responseMaped;
   }
 }

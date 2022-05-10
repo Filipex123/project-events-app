@@ -1,5 +1,4 @@
 import 'package:brota_ai_app/models/user_model.dart';
-import 'package:brota_ai_app/screens/edit_event_screen.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/join_event_screen.dart';
 import 'package:brota_ai_app/screens/login.dart';
@@ -12,8 +11,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 
+import 'models/event_card_model.dart';
+
 void main() {
   GetIt.I.registerSingleton<UsersModel>(UsersModel());
+  GetIt.I.registerSingleton<EventResponseCardModel>(EventResponseCardModel());
   runApp(const MyApp());
 }
 
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.id: (context) => HomeScreen(),
         NewEventScreen.id: (context) => const NewEventScreen(),
         MyEventsScreen.id: (context) => const MyEventsScreen(),
-        JoinEventScreen.id: (context) => JoinEventScreen(),
+        JoinEventScreen.id: (context) => const JoinEventScreen(),
       },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

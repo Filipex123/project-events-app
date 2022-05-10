@@ -1,13 +1,17 @@
-import 'package:brota_ai_app/screens/join_event_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import '../models/event_card_model.dart';
+import '../screens/join_event_screen.dart';
 
 class EventCard extends StatelessWidget {
+  final EventResponseCardModel model;
   final String name;
   final String dateTime;
   final String sport;
 
   const EventCard(
       {Key? key,
+      required this.model,
       required this.name,
       required this.dateTime,
       required this.sport})
@@ -65,7 +69,13 @@ class EventCard extends StatelessWidget {
           color: Colors.black.withOpacity(0.05),
         ),
       ),
-      onTap: () => {Navigator.pushNamed(context, JoinEventScreen.id)},
+      onTap: () => {
+        GetIt.I<EventResponseCardModel>().locale = model.locale,
+        GetIt.I<EventResponseCardModel>().description = model.description,
+        GetIt.I<EventResponseCardModel>().id = model.id,
+        GetIt.I<EventResponseCardModel>().name = model.name,
+        Navigator.pushNamed(context, JoinEventScreen.id)
+      },
     );
   }
 }

@@ -1,15 +1,24 @@
+import 'dart:convert';
+
+import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import '../components/google-map.dart';
+import '../components/simple_modal.dart';
+import '../models/event_card_model.dart';
 
 class JoinEventScreen extends StatefulWidget {
-  static const String id = 'joinr_event_escreen';
+  static const String id = 'join_event_escreen';
+
+  const JoinEventScreen({Key? key}) : super(key: key);
 
   @override
   State<JoinEventScreen> createState() => _JoinEventScreenState();
 }
 
 class _JoinEventScreenState extends State<JoinEventScreen> {
+  String eventId = GetIt.I<EventResponseCardModel>().id!;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,11 +30,11 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Nome do evento',
-                style: TextStyle(
+                GetIt.I<EventResponseCardModel>().name!,
+                style: const TextStyle(
                     fontStyle: FontStyle.normal,
                     fontFamily: 'ABeeZee',
                     fontWeight: FontWeight.w500,
@@ -59,12 +68,12 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                 ),
               ],
             ),
-            child: const SingleChildScrollView(
+            child: SingleChildScrollView(
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '"Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI, quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker."',
-                  style: TextStyle(
+                  GetIt.I<EventResponseCardModel>().description ?? "",
+                  style: const TextStyle(
                       fontStyle: FontStyle.normal,
                       fontFamily: 'ABeeZee',
                       fontWeight: FontWeight.w500,
@@ -74,18 +83,9 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
               ),
             ),
           ),
-          const Text(
-            "Localizacao",
-            style: TextStyle(
-                fontStyle: FontStyle.normal,
-                fontFamily: 'ABeeZee',
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-                color: Colors.black),
-          ),
-          const Text(
-            "Rua fulana de tal",
-            style: TextStyle(
+          Text(
+            GetIt.I<EventResponseCardModel>().locale!["name"] ?? "",
+            style: const TextStyle(
                 fontStyle: FontStyle.normal,
                 fontFamily: 'ABeeZee',
                 fontWeight: FontWeight.w500,
@@ -97,7 +97,6 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
             height: size.height * 0.38,
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
             child: GoogleSimpleMap(),
-            //colocar mapa aqui
           ),
           Container(
             padding: const EdgeInsets.only(top: 4),
@@ -119,11 +118,42 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                       fontFamily: 'ABeeZee',
                     ),
                   ),
-                  onPressed: () => {}),
+                  onPressed: () => {_joinEvent()}),
             ),
           ),
         ],
       ),
     );
+  }
+
+  _joinEvent() {
+    APIService()
+        .joinEvent(eventId)
+        .then((value) => {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) => SimpleModal(
+                  message: 'Inscrito no evento com sucesso.',
+                  modalTitle: "Sucesso",
+                  closeButtonText: 'OK',
+                  closeCallBack: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              )
+            })
+        .catchError((error) => {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) => SimpleModal(
+                  message:
+                      'Erro ao se inscrever no evento:\n${(json.decode(error.body))["message"]}',
+                  modalTitle: "Erro",
+                  closeButtonText: 'TENTAR NOVAMENTE',
+                ),
+              ),
+            });
   }
 }

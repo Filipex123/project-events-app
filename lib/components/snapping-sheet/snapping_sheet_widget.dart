@@ -121,6 +121,7 @@ class _SimpleSnappingSheetState extends State<SimpleSnappingSheet> {
                       return Column(
                         children: _eventCards
                             .map<EventCard>((e) => EventCard(
+                                model: e,
                                 name: e.name!,
                                 dateTime: DateFormat('dd/MM - HH:mm')
                                     .format(e.initialDateTime!),
