@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:brota_ai_app/models/user_model.dart';
 import 'package:brota_ai_app/screens/home.dart';
 import 'package:brota_ai_app/screens/login.dart';
@@ -28,10 +30,11 @@ class _MySplashScreenState extends State<MySplashScreen> {
 
   Future _verifyLoggedUser() async {
     String? token = await TokenStorageService.read();
-
+    log(token ?? 'nada');
     if (token == null) {
       Timer(const Duration(seconds: 3), _redirectToLogin);
     } else {
+      log('entrou');
       APIService apiService = APIService();
       apiService.validToken(token).then((response) async {
         await apiService.getLogged();

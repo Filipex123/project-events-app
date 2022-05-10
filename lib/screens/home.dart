@@ -1,11 +1,13 @@
+import 'dart:async';
 import 'dart:developer';
 
+import 'package:brota_ai_app/components/address_search.dart';
 import 'package:brota_ai_app/components/drawer.dart';
-import 'package:brota_ai_app/components/google-map.dart';
 import 'package:brota_ai_app/components/home_search_bar.dart';
 import 'package:brota_ai_app/components/snapping-sheet/snapping_sheet_widget.dart';
-import 'package:brota_ai_app/models/user_model.dart';
+import 'package:brota_ai_app/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_place/google_place.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 
@@ -20,6 +22,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final snappingSheetController = SnappingSheetController();
+  final Completer<GoogleMapController> _controller = Completer();
+  TextEditingController searchController = TextEditingController();
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{}; 
+
   GooglePlace? googlePlace;
   List<AutocompletePrediction> predictions = [];
 
@@ -29,43 +35,73 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  static final _kGooglePlex = CameraPosition(
+    // Brasília cordinates
+    target: LatLng(-15.793699, -47.882720),
+    zoom: 11,
+  );
+
   void _handleOnTapSearhBar() async {
-    if (snappingSheetController.isAttached) {
-      const position = SnappingPosition.factor(
-        positionFactor: 0.0,
-        snappingCurve: Curves.ease,
-        snappingDuration: Duration(milliseconds: 0),
-        grabbingContentOffset: GrabbingContentOffset.top,
+    final result = await showSearch(
+      context: context,
+      delegate: AddressSearch(),
+    );
+    if (result != null) {
+      searchController.text = result.name ?? '';
+      APIService apiService = APIService();
+
+      var _kGoogleNewPosition = CameraPosition(
+        target: LatLng(result.geometry!.location!.lat ?? -15.793699, result.geometry!.location!.lng ??  -47.882720),
+        zoom: 16.5,
       );
-      snappingSheetController.snapToPosition(position);
+
+      var nearbyEvents = await apiService.getAllByLocale({
+        "lat": result.geometry!.location!.lat,
+        "lng": result.geometry!.location!.lng,
+      });
+
+      nearbyEvents.forEach((element) {
+        log(element.toString());
+        final markerIdVal = element.name ?? '';
+        final MarkerId markerId = MarkerId(markerIdVal);
+        final Marker marker = Marker(
+          markerId: markerId,
+          position: LatLng(double.parse(element.locale!['lat']), double.parse(element.locale!['lng'])),
+          infoWindow: InfoWindow(title: markerIdVal, snippet: element.sport!.name !+ ": " + (element.description ?? '') , onTap: () {
+            log('clicou na info window');
+          }),
+          onTap: () {
+            // _onMarkerTapped(markerId);
+          },
+        );
+        setState(() {
+          markers[markerId] = marker;
+        });
+      });
+
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(_kGoogleNewPosition));
+
+    var markerIdVal = 'aaa';
+    final MarkerId markerId = MarkerId(markerIdVal);
+
+    final Marker marker = Marker(
+      markerId: markerId,
+      position: LatLng(result.geometry!.location!.lat ?? -15.793699, result.geometry!.location!.lng ??  -47.882720),
+      infoWindow: InfoWindow(title: markerIdVal, snippet: 'zxxc', onTap: () {
+        log('clicou na info window');
+      }),
+      onTap: () {
+        // _onMarkerTapped(markerId);
+      },
+    );
+
+    // setState(() {
+    //   // adding a new marker to map
+    //   markers[markerId] = marker;
+    //   markers.addAll(marker);
+    // });
     }
-
-    var result = await googlePlace?.search
-        .getFindPlace("Júlio Wilfredo", InputType.TextQuery);
-    var result3 = await googlePlace?.search
-        .getTextSearch("Rua Júlio Wilfredo Castro Perez 325");
-    var result2 = await googlePlace?.autocomplete
-        .get('Rua Júlio Wilfredo Castro Perez 325');
-
-    result3?.results!.forEach(
-      (element) {
-        log(element.name ?? '');
-        log(element.geometry?.location?.lat.toString() ?? '');
-        log(element.geometry?.location?.lng.toString() ?? '');
-      },
-    );
-
-    result?.candidates!.forEach(
-      (element) {
-        log(element.name ?? 'nada');
-      },
-    );
-
-    result2?.predictions!.forEach(
-      (element) {
-        log(element.description ?? '');
-      },
-    );
   }
 
   @override
@@ -75,12 +111,27 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: snappingSheetController,
         widgetBackground: Stack(
           children: [
-            GoogleSimpleMap(),
+            Scaffold(
+              body: GoogleMap(
+                mapType: MapType.normal,
+                zoomControlsEnabled: false,
+                compassEnabled: false,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  _controller.complete(controller);
+                },
+                markers: Set<Marker>.of(markers.values),
+                // onTap: (latlong) {
+                //   FocusScope.of(context).requestFocus(FocusNode());
+                // },
+              )
+            ),
             SafeArea(
               child: Container(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: SearchBar(
                   handleOnTap: _handleOnTapSearhBar,
+                  controller: searchController
                 ),
               ),
             ),
