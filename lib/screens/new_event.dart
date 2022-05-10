@@ -78,7 +78,6 @@ class _NewEventScreenState extends State<NewEventScreen> {
   }
 
   void handleOnChangeSport(String? selectedValue) {
-    log("################# ESPORTE SELECIONADO = " + (selectedValue ?? ""));
     if (selectedValue != null) {
       var sport = SportModel();
       sport.id = selectedValue;
