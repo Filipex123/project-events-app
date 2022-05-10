@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:brota_ai_app/models/event_card_model.dart';
 import 'package:brota_ai_app/models/event_model.dart';
-import 'package:brota_ai_app/models/event_card_model.dart';
 import 'package:brota_ai_app/models/login_model.dart';
 import 'package:brota_ai_app/models/signup_model.dart';
 import 'package:brota_ai_app/models/user_model.dart';
@@ -12,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.100.109:3333";
+  static const String baseUrl = "http://192.168.0.55:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -24,9 +23,9 @@ class APIService {
 
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     final response = await http.post(getRequestUrl('login'),
-      body: json.encode(loginRequestModel.toJson()), headers: requestHeaders);
-        LoginResponseModel responseMaped =
-          LoginResponseModel.fromJson(json.decode(response.body));
+        body: json.encode(loginRequestModel.toJson()), headers: requestHeaders);
+    LoginResponseModel responseMaped =
+        LoginResponseModel.fromJson(json.decode(response.body));
 
     if (response.statusCode == 201) {
       return responseMaped;
@@ -129,6 +128,27 @@ class APIService {
       throw response;
     }
     return true;
+  }
+
+  Future<List<EventResponseCardModel>> getJoinedEvents() async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    final response =
+        await http.get(getRequestUrl('events/join'), headers: headerWithToken);
+
+    final List<dynamic> responseMaped = json.decode(response.body);
+
+    final eventCardList = responseMaped
+        .map((json) => EventResponseCardModel.fromJson(json["event"]))
+        .toList();
+
+    if (response.statusCode == 200) {
+      return eventCardList;
+    }
+
+    throw responseMaped;
   }
 
   void deleteEvent(String id) async {

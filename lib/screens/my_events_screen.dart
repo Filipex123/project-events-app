@@ -21,6 +21,9 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
   Future<List<EventResponseCardModel>> _eventsFuture =
       APIService().getAllEventsByOwner();
 
+  Future<List<EventResponseCardModel>> _eventsJoinedFuture =
+      APIService().getJoinedEvents();
+
   void _updateScreen() {
     setState(() {
       _eventsFuture = APIService().getAllEventsByOwner();
@@ -78,12 +81,43 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
         ),
         body: TabBarView(
           children: [
-            const SizedBox(
-              height: 160,
-              width: 160,
-              child: Icon(
-                Icons.question_mark,
-                size: 160,
+            SingleChildScrollView(
+              child: FutureBuilder(
+                future: _eventsJoinedFuture,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return const SizedBox(
+                      height: 50.0,
+                      width: 50.0,
+                      child: CircularProgressIndicator(
+                        value: null,
+                        strokeWidth: 7.0,
+                      ),
+                    );
+                  } else {
+                    return Column(
+                      children: snapshot.data
+                          .map<MyEventCard>(
+                            (e) => MyEventCard(
+                              id: e.id,
+                              name: e.name!,
+                              minAge:
+                                  (e.minAge != null) ? e.minAge.toString() : "",
+                              maxAge:
+                                  (e.maxAge != null) ? e.maxAge.toString() : "",
+                              gender: e.gender ?? "P",
+                              dateTime: DateFormat('dd/MM - HH:mm')
+                                  .format(e.initialDateTime!),
+                              sport: e.sport!.name,
+                              description: e.description!,
+                              locale: e.locale,
+                              updateFunction: _updateScreen,
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                },
               ),
             ),
             SingleChildScrollView(
@@ -130,7 +164,4 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
       ),
     );
   }
-
-  Future<List<EventResponseCardModel>> getFutureEvents() =>
-      APIService().getAllEventsByOwner();
 }
