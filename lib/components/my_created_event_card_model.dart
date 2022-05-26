@@ -85,6 +85,8 @@ class _MyCreatedEventCardState extends State<MyCreatedEventCard> {
                         ),
                       ),
                       Text(
+                        widget.description.toString().length > 30 ?
+                        widget.description.toString().substring(0, 30) + "..." :
                         widget.description,
                         style: const TextStyle(
                           fontSize: 20,
@@ -111,6 +113,8 @@ class _MyCreatedEventCardState extends State<MyCreatedEventCard> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
+                    widget.locale['name'].toString().length > 30 ?
+                    widget.locale['name'].toString().substring(0, 30) + "..." :
                     widget.locale['name'],
                     style: const TextStyle(
                       fontSize: 20,

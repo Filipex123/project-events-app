@@ -74,7 +74,9 @@ class _MyEventCardState extends State<MyEventCard> {
                       ),
                     ),
                     Text(
-                      widget.description,
+                      widget.description.toString().length > 30 ?
+                    widget.description.toString().substring(0, 30) + "..." :
+                    widget.description,
                       style: const TextStyle(
                         fontSize: 20,
                         fontFamily: 'ABeeZee',
@@ -100,11 +102,14 @@ class _MyEventCardState extends State<MyEventCard> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  widget.locale['name'],
+                  widget.locale['name'].toString().length > 30 ?
+                    widget.locale['name'].toString().substring(0, 30) + "..." :
+                    widget.locale['name'],
                   style: const TextStyle(
                     fontSize: 20,
                     fontFamily: 'ABeeZee',
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

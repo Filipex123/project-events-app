@@ -5,8 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class GoogleSimpleMap extends StatefulWidget {
   final double? lat;
   final double? lng;
+  final double? zoom;
 
-  const GoogleSimpleMap ({ Key? key, this.lat, this.lng }): super(key: key);
+  const GoogleSimpleMap ({ Key? key, this.lat, this.lng, this.zoom }): super(key: key);
 
   @override
   State<GoogleSimpleMap> createState() => GoogleSimpleMapState();
@@ -16,6 +17,7 @@ class GoogleSimpleMapState extends State<GoogleSimpleMap> {
   final Completer<GoogleMapController> _controller = Completer();
   double? lat;
   double? lng;
+  double? zoom;
 
   late CameraPosition _kGooglePlex;
 
@@ -26,7 +28,7 @@ class GoogleSimpleMapState extends State<GoogleSimpleMap> {
     _kGooglePlex = CameraPosition(
       // target: LatLng(-15.793699, -47.882720),
       target: LatLng(lat ?? -15.793699, lng ?? -47.882720),
-      zoom: 11,
+      zoom: widget.zoom ?? 11,
     );
   }
 

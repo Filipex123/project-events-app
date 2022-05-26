@@ -19,6 +19,12 @@ class JoinEventScreen extends StatefulWidget {
 
 class _JoinEventScreenState extends State<JoinEventScreen> {
   String eventId = GetIt.I<EventResponseCardModel>().id!;
+
+
+  void _handleOnClickToggleButton(bool isParticipation) {
+
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -94,9 +100,13 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
           ),
           Container(
             width: size.width,
-            height: size.height * 0.38,
+            height: size.height * 0.3,
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-            child: GoogleSimpleMap(),
+            child: GoogleSimpleMap(
+              lat: double.parse(GetIt.I<EventResponseCardModel>().locale!["lat"]),
+              lng: double.parse(GetIt.I<EventResponseCardModel>().locale!["lng"]),
+              //zoom: 2.5,
+            ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 4),
@@ -111,19 +121,46 @@ class _JoinEventScreenState extends State<JoinEventScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
-                  child: const Text(
-                    'Participar',
+                  child: Text(
+                    GetIt.I<EventResponseCardModel>().participating ?? false ? 'Cancelar participação' : 'Participar',
                     style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'ABeeZee',
                     ),
                   ),
-                  onPressed: () => {_joinEvent()}),
+                  onPressed: () {
+                    if (GetIt.I<EventResponseCardModel>().participating ?? false) {
+                      _unjoinEvent();
+                    } else {
+                      _joinEvent();
+                    }
+                  },
             ),
           ),
+          )
         ],
       ),
     );
+  }
+
+  _unjoinEvent() {
+    APIService()
+      .unjoinEvent(eventId)
+      .then((value) => {
+              showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (BuildContext context) => SimpleModal(
+                  message: 'presença cancelado com sucesso.',
+                  modalTitle: "Sucesso",
+                  closeButtonText: 'OK',
+                  closeCallBack: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              )
+            });
+
   }
 
   _joinEvent() {

@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
       nearbyEvents.forEach((element) {
-        log(element.toString());
+        log("############" + element.participating.toString());
         final markerIdVal = element.name ?? '';
         final MarkerId markerId = MarkerId(markerIdVal);
         final Marker marker = Marker(
@@ -75,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
             GetIt.I<EventResponseCardModel>().description = element.description;
             GetIt.I<EventResponseCardModel>().id = element.id;
             GetIt.I<EventResponseCardModel>().name = element.name;
+            GetIt.I<EventResponseCardModel>().participating = element.participating;
             Navigator.pushNamed(context, JoinEventScreen.id);
           }),
           onTap: () {
