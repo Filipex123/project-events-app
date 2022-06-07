@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class APIService {
-  static const String baseUrl = "http://192.168.43.245:3332";
+  static const String baseUrl = "http://192.168.182.216:3333";
   static final Map<String, String> requestHeaders = {
     'Content-type': 'application/json',
     'Accept': 'application/json',
@@ -242,17 +242,19 @@ class APIService {
     throw responseMaped;
   }
 
-  Future<List<EventResponseCardModel>> getAllByLocale(Map<String, dynamic> locale) async {
+  Future<List<EventResponseCardModel>> getAllByLocale(
+      Map<String, dynamic> locale) async {
     final tokenString = await TokenStorageService.read();
     final headerWithToken = requestHeaders;
     headerWithToken['Authorization'] = 'Bearer $tokenString';
 
     log(locale.toString());
 
-    final response = await http.post(getRequestUrl('events/locale'), body: json.encode(locale), headers: headerWithToken);
+    final response = await http.post(getRequestUrl('events/locale'),
+        body: json.encode(locale), headers: headerWithToken);
 
     final List<dynamic> responseMaped = json.decode(response.body);
-    
+
     final eventList = responseMaped
         .map((json) => EventResponseCardModel.fromJson(json))
         .toList();
