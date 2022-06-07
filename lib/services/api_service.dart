@@ -130,6 +130,20 @@ class APIService {
     return true;
   }
 
+  Future<bool> unjoinEvent(String eventId) async {
+    final tokenString = await TokenStorageService.read();
+    final headerWithToken = requestHeaders;
+    headerWithToken['Authorization'] = 'Bearer $tokenString';
+
+    var response = await http.post(getRequestUrl('events/unjoin/$eventId'),
+        headers: headerWithToken);
+
+    if (response.statusCode != 201) {
+      throw response;
+    }
+    return true;
+  }
+
   Future<List<EventResponseCardModel>> getJoinedEvents() async {
     final tokenString = await TokenStorageService.read();
     final headerWithToken = requestHeaders;
@@ -250,8 +264,12 @@ class APIService {
 
     log(locale.toString());
 
+<<<<<<< HEAD
     final response = await http.post(getRequestUrl('events/locale'),
         body: json.encode(locale), headers: headerWithToken);
+=======
+    final response = await http.post(getRequestUrl('events/search/locale'), body: json.encode(locale), headers: headerWithToken);
+>>>>>>> 27dfec1caa670dd5ce38c4ae5f0d30f1a352aae8
 
     final List<dynamic> responseMaped = json.decode(response.body);
 

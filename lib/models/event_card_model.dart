@@ -10,6 +10,7 @@ class EventResponseCardModel {
   String? description;
   String? gender;
   DateTime? initialDateTime;
+  bool? participating;
 
   EventResponseCardModel(
       {this.id,
@@ -20,7 +21,9 @@ class EventResponseCardModel {
       this.name,
       this.sport,
       this.gender,
-      this.initialDateTime});
+      this.initialDateTime,
+      this.participating
+      });
 
   factory EventResponseCardModel.fromJson(dynamic json) {
     return EventResponseCardModel(
@@ -32,7 +35,10 @@ class EventResponseCardModel {
         locale: json["locale"] ?? "",
         description: json["description"] ?? "",
         gender: json["gender"] ?? "",
-        initialDateTime: DateTime.parse(json["initialDateTime"]));
+        initialDateTime: DateTime.parse(json["initialDateTime"]),
+        participating: json["participating"]
+        
+        );
   }
 }
 

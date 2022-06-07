@@ -54,6 +54,7 @@ class _BasicDateTimeFieldState extends State<BasicDateTimeField> {
                 filled: true,
                 fillColor: Colors.white,
                 counterText: ''),
+                readOnly: true,
             obscureText: false,
             style: kInputText,
             keyboardType: TextInputType.none,
