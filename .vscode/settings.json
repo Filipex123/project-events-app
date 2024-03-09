@@ -1,0 +1,14 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    //"android": true,
+    "build": true,
+    "ios": true,
+    "web": true,
+    ".flutter-plugins*": true,
+    ".metadata": true,
+    ".packages": true,
+    "pubspec.lock": true,
+    "lib/generated_plugin_registrant.dart": true,
+  }
+}
